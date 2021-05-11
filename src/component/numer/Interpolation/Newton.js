@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
-const InputStyle = {
-    background: "#1890ff",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "24px"
-
-};
+// import axios from 'axios';
 var columns = [
     {
         title: "No.",
@@ -52,23 +45,21 @@ class Newton extends Component {
     createTableInput(n) {
         for (var i = 1; i <= n; i++) {
             x.push(<Input style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "50%",
+                height: "40%",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
                 id={"x" + i} key={"x" + i} placeholder={"x" + i} />);
             y.push(<Input style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "50%",
+                height: "40%",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -89,12 +80,11 @@ class Newton extends Component {
     createInterpolatePointInput() {
         for (var i = 1; i <= this.state.interpolatePoint; i++) {
             tempTag.push(<Input style={{
-                width: "14%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "10%",
+                height: "40%",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -153,60 +143,86 @@ class Newton extends Component {
             [event.target.name]: event.target.value
         });
     }
+    // async dataapi() {
+    //     await axios({method: "get",url: "http://localhost:5000/database/newtondivide",}).then((response) => {console.log("response: ", response.data);api = response.data;});
+    //     await this.setState({
+    //         fx:api.nPoints,
+    //       xl:api.X,
+    //       xr:api.interpolatePoint
+    //     })
+    //   }
     render() {
         return (
-            <div style={{ padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Newton's Divided Differences Interpolation</h2>
+            <div style={{ background: "#FFFF", padding: "30px" }}>
+                <h1 style = {{textAlign: 'center',fontSize:'30px'}}>Newton's Divided Differences Interpolation</h1>
+
                 <div className="row">
                     <div className="col">
-                        <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        >
+                        
+                            {this.state.showInputForm &&
+                                
+                                    <form style = {{textAlign: 'center',fontSize:'21px'}} id="inputCard">
+                                        <h4>Number of points(n)  : &nbsp;&nbsp;               
+                                            <Input size="large" name ="nPoints" style={{ width: 300 }}
+                                            onChange={this.handleChange}
+                                            />
+                                        </h4>
+                                        <br></br>
+                                        <h4>X : &nbsp;&nbsp;
+                                            <Input size="large" name ="X" style={{ width: 200 }}
+                                            onChange={this.handleChange}
+                                            />
+                                        </h4>
+                                        <br></br>
+                                        <h4>interpolatePoint : &nbsp;&nbsp;
+                                            <Input size="large" name = "interpolatePoint"style={{ width: 200 }}
+                                            onChange={this.handleChange}
+                                            />
+                                        </h4>
+                                        <br></br>
+                                        
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#008080'}}
+                                        onClick={() => {this.createTableInput(parseInt(this.state.nPoints));this.createInterpolatePointInput()}}>
+                                            Submit
+                                        </Button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        onClick={() => this.dataapi()}>
+                                            Function
+                                        </Button>
+                                        </form>
+                            }
+
                             {this.state.showTableInput &&
                                 <div>
-                                    <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "white", overflowY: "scroll", minWidth: 120, maxHeight: 300 }}></Table>
+                                    <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black", overflowY: "scroll", minWidth: 80, maxHeight: 300 }}></Table>
                                     <br /><h2>interpolatePoint {parseInt(this.state.interpolatePoint) === 2 ? "(Linear)" :
                                         parseInt(this.state.interpolatePoint) === 3 ? "(Quadratic)" :
                                             "(Polynomial)"}</h2>{tempTag}
                                     <Button
                                         id="matrix_button"
-                                        style={{ background: "blue", color: "white" }}
+                                        style={{ color:'#ffffff',background: "#008080" }}
                                         onClick={() => this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X))}>
                                         Submit
                                 </Button>
-                                </div>}
-
-                            {this.state.showInputForm &&
-                                <div>
-                                    <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                                    <h2>X</h2><Input size="large" name="X" style={InputStyle}></Input>
-                                    <h2>interpolatePoint</h2><Input size="large" name="interpolatePoint" style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
-                                        () => {
-                                            this.createTableInput(parseInt(this.state.nPoints));
-                                            this.createInterpolatePointInput()
-                                        }
-                                    }
-                                        style={{ background: "#4caf50", color: "white" }}>
-                                        Submit<br></br>
-                                    </Button>
                                 </div>
                             }
 
-                        </Card>
+                            
+                        
                     </div>
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white" }}
+                                style={{  background: "while", color: "black" }}
                             >
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{fx}</p>
 
-                            </Card>
+                            </Card> 
                         }
                     </div>
 
@@ -218,6 +234,3 @@ class Newton extends Component {
     }
 }
 export default Newton;
-
-
-

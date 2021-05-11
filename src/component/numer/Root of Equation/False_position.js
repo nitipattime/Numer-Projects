@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 // import '../../screen.css';
 import 'antd/dist/antd.css';
-
+import axios from 'axios';
 import { error, func } from '../services/Services';
 // import Graph from '../../components/Graph';
 
@@ -137,7 +137,7 @@ class FalsePosition extends Component {
             xr:response['xr']
         })
         
-        this.bisection(this.state.xl,this.state.xr);
+        this.false_position(this.state.xl,this.state.xr);
         
     }
     render() {
@@ -199,7 +199,7 @@ class FalsePosition extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
                     style={{ color:'#ffffff',background:'#f7c602'}}
-                    onClick={() => this.bisection(parseFloat(xl), parseFloat(xr))}
+                    onClick={() => this.dataapi()}
                     >
                       Function
                     </Button>

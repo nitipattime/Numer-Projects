@@ -13,6 +13,8 @@ const InputStyle = {
     fontSize: "24px"
 
 };
+
+var api;
 var dataInTable = []
 const columns = [
     {
@@ -112,6 +114,7 @@ class Bisection extends Component {
         dataInTable = []
         for (var i = 0; i < xl.length; i++) {
             dataInTable.push({
+                key:i,
                 iteration: i + 1,
                 xl: xl[i],
                 xr: xr[i],
@@ -127,18 +130,48 @@ class Bisection extends Component {
         });
 
     }
-    dataapi = async()=>{
-        var response = await axios.get('http://localhost:5000/bisec').then(res => {return res.data});
-        console.log(response)
-        this.setState({
-            fx:response['fx'],
-            xl:response['xl'],
-            xr:response['xr']
+    
+    async dataapi() {
+        await axios({method: "get",url: "http://localhost:5000/database/bisection",}).then((response) => {console.log("response: ", response.data);api = response.data;});
+        await this.setState({
+            fx:api.fx,
+          xl:api.xl,
+          xr:api.xr
         })
+      }
+      
+    //   this.setState({
+    //             fx:response['fx'],
+    //             xl:response['xl'],
+    //             xr:response['xr']
+    //         })
+            
+    //         this.bisection(this.state.xl,this.state.xr);
+    // dataapi = async()=>{
+    //     var response = await axios.get('http://localhost:3000/bisec').then(res => {return res.data});
+    //     console.log(response)
+    //     this.setState({
+    //         fx:response['fx'],
+    //         xl:response['xl'],
+    //         xr:response['xr']
+    //     })
         
-        this.bisection(this.state.xl,this.state.xr);
+    //     this.bisection(this.state.xl,this.state.xr);
         
-    }
+    // }
+    // dataapis = async()=>{
+    //     var response = await axios.get('http://localhost:5000/database/bisection').then(res => {return res.data});
+    //     console.log(response)
+    //     this.setState({
+    //         fx:response['fx'],
+    //         xl:response['xl'],
+    //         xr:response['xr']
+    //     })
+        
+    //     this.bisection(this.state.xl,this.state.xr);
+        
+    // }
+    
     // async example() {
     //     await axios({
     //       method: "get",
@@ -186,19 +219,19 @@ class Bisection extends Component {
                   
                 >
                   <h4>Equation  : &nbsp;&nbsp;               
-                    <Input size="large" placeholder="Input your Function" name ="fx" style={{ width: 300 }}
+                    <Input size="large" placeholder="Input your Function" name ="fx" value={this.state.fx} style={{ width: 300 }}
                     onChange={this.handleChange}
                     />
                   </h4>
                   <br></br>
                   <h4>XL : &nbsp;&nbsp;
-                    <Input size="large" placeholder="Input your Xl" name ="xl" style={{ width: 200 }}
+                    <Input size="large" placeholder="Input your Xl" name ="xl" value={this.state.xl} style={{ width: 200 }}
                     onChange={this.handleChange}
                     />
                   </h4>
                   <br></br>
                   <h4>XR : &nbsp;&nbsp;
-                    <Input size="large" placeholder="Input your Xr" name = "xr"style={{ width: 200 }}
+                    <Input size="large" placeholder="Input your Xr" name = "xr" value={this.state.xr} style={{ width: 200 }}
                     onChange={this.handleChange}
                     />
                   </h4>
@@ -221,14 +254,14 @@ class Bisection extends Component {
                 <br></br>
                 <div className="row">
                     {this.state.showOutputCard &&
-                        <Card
-                            title={"Output"}
-                            bordered={true}
-                            style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
-                            id="outputCard"
-                        >
+                        // <Card
+                        //     title={"Output"}
+                        //     bordered={true}
+                        //     style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
+                        //     id="outputCard"
+                        // >
                             <Table  columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
-                         </Card>
+                        //  </Card>
                     }
                 </div>
             </div>

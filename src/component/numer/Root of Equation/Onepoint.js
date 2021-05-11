@@ -4,6 +4,7 @@ import { Card, Input, Button, Table } from 'antd';
 import 'antd/dist/antd.css';
 import { error, func } from '../services/Services';
 // import Graph from '../../components/Graph';
+import axios from 'axios';
 
 const InputStyle = {
     background: "#1890ff",
@@ -86,6 +87,18 @@ class Onepoint extends Component {
             [event.target.name]: event.target.value
         });
     }
+    dataapi = async()=>{
+        var response = await axios.get('http://localhost:5000/one-point').then(res => {return res.data});
+        console.log(response)
+        this.setState({
+            fx:response['fx'],
+            x0:response['x0']
+            // xr:response['xr']
+        })
+        
+        this.onepoint(this.state.xold);
+        
+    }
     render() {
         let { fx, x0 } = this.state;
         return (
@@ -139,7 +152,7 @@ class Onepoint extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
                     style={{ color:'#ffffff',background:'#f7c602'}}
-                    onClick={() => this.onepoint(parseFloat(x0))}
+                    onClick={() => this.dataapi()}
                     >
                       Function
                     </Button>
