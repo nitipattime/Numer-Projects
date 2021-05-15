@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func } from '../services/Services';
-// import Graph from '../../components/Graph';
 import axios from 'axios';
+var api;
 
 const InputStyle = {
     background: "#1890ff",
@@ -75,6 +74,7 @@ class Onepoint extends Component {
         dataInTable = []
         for (var i = 0; i < x.length; i++) {
             dataInTable.push({
+                key:i,
                 iteration: i + 1,
                 x: x[i],
                 error: error[i]
@@ -87,18 +87,16 @@ class Onepoint extends Component {
             [event.target.name]: event.target.value
         });
     }
-    dataapi = async()=>{
-        var response = await axios.get('http://localhost:5000/one-point').then(res => {return res.data});
-        console.log(response)
-        this.setState({
-            fx:response['fx'],
-            x0:response['x0']
-            // xr:response['xr']
+    async dataapi() {
+        await axios({method: "get",url: "http://localhost:5000/database/onepoint",}).then((response) => {console.log("response: ", response.data);api = response.data;});
+        await this.setState({
+            fx:api.fx,
+          x0:api.x0
+          
+          
         })
-        
-        this.onepoint(this.state.xold);
-        
-    }
+        this.onepoint(this.state.x0)
+      }
     render() {
         let { fx, x0 } = this.state;
         return (
@@ -130,13 +128,13 @@ class Onepoint extends Component {
                   
                   >
                     <h4>Equation  : &nbsp;&nbsp;               
-                      <Input size="large" placeholder="Input your Function" name ="fx" style={{ width: 300 }}
+                      <Input size="large" placeholder="Input your Function" name ="fx" value={this.state.fx}style={{ width: 300 }}
                       onChange={this.handleChange}
                       />
                     </h4>
                     <br></br>
                     <h4>X0 : &nbsp;&nbsp;
-                      <Input size="large" placeholder="Input your Xl" name ="x0" style={{ width: 200 }}
+                      <Input size="large" placeholder="Input your X0" name ="x0" value={this.state.x0}style={{ width: 200 }}
                       onChange={this.handleChange}
                       />
                     </h4>

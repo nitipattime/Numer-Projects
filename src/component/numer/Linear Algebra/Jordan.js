@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Input, Button } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
-
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -73,7 +73,7 @@ class Jordan extends Component {
             }
         }
         for (i = 0; i < n; i++) {
-            output.push(B[i]);
+            output.push("x" + (i + 1) + " = " +B[i]);
             output.push(<br />)
         }
         this.setState({
@@ -135,6 +135,30 @@ class Jordan extends Component {
             [event.target.name]: event.target.value
         });
     }
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/gauss",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+          row: api.row,
+          column: api.column,
+        });
+        matrixA = [];
+        matrixB = [];
+        await this.createMatrix(api.row, api.column);
+        for (let i = 1; i <= api.row; i++) {
+          for (let j = 1; j <= api.column; j++) {
+            document.getElementById("a" + i + "" + j).value =
+              api.matrixA[i - 1][j - 1];
+          }
+          document.getElementById("b" + i).value = api.matrixB[i - 1];
+        }
+        this.jordan(this.state.row);
+      }
     render() {
         let { row, column } = this.state;
         return (
@@ -150,13 +174,19 @@ class Jordan extends Component {
 
                             {this.state.showDimentionForm &&
                                 <div>
-                                    <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
-                                    <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
+                                    <h2>Row</h2><Input size="large" name="row" value={this.state.row}style={InputStyle}></Input>
+                                    <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={InputStyle}></Input>
                                     <Button id="dimention_button" onClick={
                                         () => this.createMatrix(row, column)
                                     }
                                         style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>
                                         Submit<br></br>
+                                    </Button>
+                                    <Button id="dimention_button" onClick={
+                                        () => this.dataapi()
+                                    }
+                                        style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>
+                                        API<br></br>
                                     </Button>
                                 </div>
                             }

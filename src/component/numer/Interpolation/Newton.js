@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 import 'antd/dist/antd.css';
-// import axios from 'axios';
+import axios from 'axios';
+var api;
 var columns = [
     {
         title: "No.",
@@ -30,6 +31,7 @@ class Newton extends Component {
         interpolatePoint = []
         tempTag = []
         tableTag = []
+
         this.state = {
             nPoints: 0,
             X: 0,
@@ -143,14 +145,36 @@ class Newton extends Component {
             [event.target.name]: event.target.value
         });
     }
-    // async dataapi() {
-    //     await axios({method: "get",url: "http://localhost:5000/database/newtondivide",}).then((response) => {console.log("response: ", response.data);api = response.data;});
-    //     await this.setState({
-    //         fx:api.nPoints,
-    //       xl:api.X,
-    //       xr:api.interpolatePoint
-    //     })
-    //   }
+
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/newtondivide",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+            nPoints: api.nPoints,
+            X: api.X,
+            interpolateinput: api.interpolateinput
+        });
+        x = []
+        y = []
+        interpolatePoint = []
+        tempTag = []
+        tableTag = []
+        await this.createInterpolatePointInput();
+        await this.createTableInput(api.nPoints);
+        for (let i = 1; i <= api.nPoints; i++) {
+          
+            document.getElementById("x" + i ).value = api.arrayX[i - 1];
+          
+          document.getElementById("y" + i).value = api.arrayY[i - 1];
+        }
+        this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
+      }
+    
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>

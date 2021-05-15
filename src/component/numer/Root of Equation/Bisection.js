@@ -138,6 +138,7 @@ class Bisection extends Component {
           xl:api.xl,
           xr:api.xr
         })
+        this.bisection(this.state.xl,this.state.xr)
       }
       
     //   this.setState({

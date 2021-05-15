@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import { inv, multiply, sum } from 'mathjs';
 
@@ -144,6 +143,7 @@ class Linear extends Component {
             [event.target.name]: event.target.value
         });
     }
+
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>

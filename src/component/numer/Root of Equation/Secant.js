@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func } from '../services/Services';
-// import Graph from '../../components/Graph';
-
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -80,6 +79,7 @@ class Secant extends Component {
         dataInTable = []
         for (var i = 0; i < y.length; i++) {
             dataInTable.push({
+                key:i,
                 iteration: i + 1,
                 y: y[i],
                 error: error[i]
@@ -92,7 +92,16 @@ class Secant extends Component {
             [event.target.name]: event.target.value
         });
     }
-
+    async dataapi() {
+        await axios({method: "get",url: "http://localhost:5000/database/secant",}).then((response) => {console.log("response: ", response.data);api = response.data;});
+        await this.setState({
+            fx:api.fx,
+          xl:api.x0,
+          x1:api.x1
+          
+        })
+        this.secant(this.state.x0,this.state.x1)
+      }
     render() {
         let { fx, x0, x1 } = this.state;
         return (
@@ -123,19 +132,19 @@ class Secant extends Component {
 
                 <form style = {{textAlign: 'center',fontSize:'21px'}}>
                     <h4>Equation  : &nbsp;&nbsp;               
-                      <Input size="large" placeholder="Input your Function" name ="fx" style={{ width: 300 }}
+                      <Input size="large" placeholder="Input your Function" name ="fx" value={this.state.fx}style={{ width: 300 }}
                       onChange={this.handleChange}
                       />
                     </h4>
                     <br></br>
-                    <h4>XL : &nbsp;&nbsp;
-                      <Input size="large" placeholder="Input your Xl" name ="x0" style={{ width: 200 }}
+                    <h4>X0 : &nbsp;&nbsp;
+                      <Input size="large" placeholder="Input your Xl" name ="x0" value={this.state.x0}style={{ width: 200 }}
                       onChange={this.handleChange}
                       />
                     </h4>
                     <br></br>
-                    <h4>XR : &nbsp;&nbsp;
-                      <Input size="large" placeholder="Input your Xr" name = "x1"style={{ width: 200 }}
+                    <h4>X1 : &nbsp;&nbsp;
+                      <Input size="large" placeholder="Input your Xr" name = "x1"value={this.state.x1}style={{ width: 200 }}
                       onChange={this.handleChange}
                       />
                     </h4>
@@ -150,7 +159,7 @@ class Secant extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
                     style={{ color:'#ffffff',background:'#f7c602'}}
-                    onClick={() => this.secant(parseFloat(x0), parseFloat(x1))}
+                    onClick={() => this.dataapi()}
                     >
                       Function
                     </Button>

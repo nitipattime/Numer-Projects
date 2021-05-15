@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import { error, func } from '../services/Services';
-// import Graph from '../../components/Graph';
-
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -128,18 +126,16 @@ class FalsePosition extends Component {
             [event.target.name]: event.target.value
         });
     }
-    dataapi = async()=>{
-        var response = await axios.get('http://localhost:5000/false-position').then(res => {return res.data});
-        console.log(response)
-        this.setState({
-            fx:response['fx'],
-            xl:response['xl'],
-            xr:response['xr']
+    async dataapi() {
+        await axios({method: "get",url: "http://localhost:5000/database/falseposition",}).then((response) => {console.log("response: ", response.data);api = response.data;});
+        await this.setState({
+            fx:api.fx,
+          xl:api.xl,
+          xr:api.xr
+          
         })
-        
-        this.false_position(this.state.xl,this.state.xr);
-        
-    }
+        this.false_position(this.state.xl,this.state.xr)
+      }
     render() {
         let { fx, xl, xr } = this.state;
         return (
@@ -172,19 +168,19 @@ class FalsePosition extends Component {
                   
                   >
                     <h4>Equation  : &nbsp;&nbsp;               
-                      <Input size="large" placeholder="Input your Function" name ="fx" style={{ width: 300 }}
+                      <Input size="large" placeholder="Input your Function" name ="fx" value={this.state.fx}style={{ width: 300 }}
                       onChange={this.handleChange}
                       />
                     </h4>
                     <br></br>
                     <h4>XL : &nbsp;&nbsp;
-                      <Input size="large" placeholder="Input your Xl" name ="xl" style={{ width: 200 }}
+                      <Input size="large" placeholder="Input your Xl" name ="xl" value={this.state.xl} style={{ width: 200 }}
                       onChange={this.handleChange}
                       />
                     </h4>
                     <br></br>
                     <h4>XR : &nbsp;&nbsp;
-                      <Input size="large" placeholder="Input your Xr" name = "xr"style={{ width: 200 }}
+                      <Input size="large" placeholder="Input your Xr" name = "xr" value={this.state.xr}style={{ width: 200 }}
                       onChange={this.handleChange}
                       />
                     </h4>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func, funcDiff } from '../services/Services';
-// import Graph from '../../components/Graph';
-
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -46,6 +45,7 @@ class Newton extends Component {
     }
 
     newton_raphson(xold) {
+        console.log(funcDiff(xold))
         var xnew = 0;
         var epsilon = parseFloat(0.000000);
         var n = 0;
@@ -53,7 +53,7 @@ class Newton extends Component {
         data['x'] = []
         data['error'] = []
         do {
-            xnew = xold - (func(this.state.fx, xold) / funcDiff(xold));
+            xnew = xold - (func(this.state.fx, xold) / funcDiff(this.state.fx,xold));
             epsilon = error(xnew, xold)
             data['x'][n] = xnew.toFixed(8);
             data['error'][n] = Math.abs(epsilon).toFixed(8);
@@ -73,6 +73,7 @@ class Newton extends Component {
         dataInTable = []
         for (var i = 0; i < x.length; i++) {
             dataInTable.push({
+                key:i,
                 iteration: i + 1,
                 x: x[i],
                 error: error[i]
@@ -85,6 +86,15 @@ class Newton extends Component {
             [event.target.name]: event.target.value
         });
     }
+    async dataapi() {
+        await axios({method: "get",url: "http://localhost:5000/database/newtonraphson",}).then((response) => {console.log("response: ", response.data);api = response.data;});
+        await this.setState({
+            fx:api.fx,
+          x0:api.x0
+          
+        })
+        this.newton_raphson(this.state.x0)
+      }
     render() {
         let { fx, x0 } = this.state;
         return (
@@ -114,13 +124,13 @@ class Newton extends Component {
 
                 <form style = {{textAlign: 'center',fontSize:'21px'}}>
                     <h4>Equation  : &nbsp;&nbsp;               
-                      <Input size="large" placeholder="Input your Function" name ="fx" style={{ width: 300 }}
+                      <Input size="large" placeholder="Input your Function" name ="fx" value={this.state.fx}style={{ width: 300 }}
                       onChange={this.handleChange}
                       />
                     </h4>
                     <br></br>
                     <h4>X0 : &nbsp;&nbsp;
-                      <Input size="large" placeholder="Input your Xl" name ="x0" style={{ width: 200 }}
+                      <Input size="large" placeholder="Input your X0" name ="x0" value={this.state.x0}style={{ width: 200 }}
                       onChange={this.handleChange}
                       />
                     </h4>
@@ -136,7 +146,7 @@ class Newton extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
                     style={{ color:'#ffffff',background:'#f7c602'}}
-                    onClick={() => this.newton_raphson(parseFloat(x0))}
+                    onClick={() => this.dataapi()}
                     >
                       Function
                     </Button>

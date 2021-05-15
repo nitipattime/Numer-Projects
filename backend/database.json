@@ -13,31 +13,31 @@
     },
     {
         "name": "newtonraphson",
-        "x": 2,
+        "x0": 2,
         "iteration": 10,
-        "latex": "3*x - cos(x) -1"
+        "fx": "3*x -1"
     },
     {
         "name": "onepoint",
-        "x": 1,
-        "latex": "(1+cos(x))/3"
+        "x0": 1,
+        "fx": "(1+cos(x))/3"
     },
     {
         "name": "secant",
         "x0": 0,
         "x1": 1,
         "iteration": 10,
-        "latex": "x*x*x - 2*x - 5"
+        "fx": "x*x*x - 2*x - 5"
     },
     {
         "name": "falseposition",
         "xl": 0.02,
         "xr": 0.03,
-        "latex": "(1/x)-43"
+        "fx": "(1/x)-43"
     },
     {
         "name": "cramer",
-        "arrayA": [
+        "matrixA": [
             [
                 -2,
                 3,
@@ -54,7 +54,7 @@
                 1
             ]
         ],
-        "arrayB": [
+        "matrixB": [
             9,
             0,
             -4
@@ -64,7 +64,7 @@
     },
     {
         "name": "gauss",
-        "arrayA": [
+        "matrixA": [
             [
                 -2,
                 3,
@@ -81,7 +81,7 @@
                 1
             ]
         ],
-        "arrayB": [
+        "matrixB": [
             9,
             0,
             -4
@@ -266,8 +266,8 @@
             9.6879,
             9.5682
         ],
-        "xfind": 42000,
-        "numberpoint": 5,
+        "X": 42000,
+        "nPoints": 5,
         "interpolateinput": 3,
         "interpolatePoint": [
             1,
