@@ -36,7 +36,7 @@ class Jacobi extends Component {
     
     }
 
-  
+ 
     jacobi(n) {
         this.initMatrix();
         var temp;
@@ -62,7 +62,6 @@ class Jacobi extends Component {
             showOutputCard: true
         });
 
-      
     }
     error(xnew, xold) {
         for (var i=0 ; i<xnew.length ; i++) {
@@ -88,10 +87,10 @@ class Jacobi extends Component {
                 matrixA.push(<Input style={{
                     width: "18%",
                     height: "50%", 
-                    backgroundColor:"#06d9a0", 
+                    // backgroundColor:"#06d9a0", 
                     marginInlineEnd: "5%", 
                     marginBlockEnd: "5%",
-                    color: "white",
+                    color: "black",
                     fontSize: "18px",
                     fontWeight: "bold"
                 }} 
@@ -101,10 +100,10 @@ class Jacobi extends Component {
             matrixB.push(<Input style={{
                 width: "18%",
                 height: "50%", 
-                backgroundColor:"black", 
+                // backgroundColor:"black", 
                 marginInlineEnd: "5%", 
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }} 
@@ -112,10 +111,10 @@ class Jacobi extends Component {
             matrixX.push(<Input style={{
                 width: "18%",
                 height: "50%", 
-                backgroundColor:"black", 
+                // backgroundColor:"black", 
                 marginInlineEnd: "5%", 
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }} 
@@ -124,11 +123,9 @@ class Jacobi extends Component {
         }
 
         this.setState({
-            showDimentionForm: false,
+            showDimentionForm: true,
             showMatrixForm: true,
         })
-
-        
 
     }
     initMatrix() {
@@ -157,6 +154,7 @@ class Jacobi extends Component {
             },)
         }
     }
+
     appendTable(x, error) {
         var tag = ''
         tag += '{"iteration": ' + count++ + ',';
@@ -175,6 +173,7 @@ class Jacobi extends Component {
             [event.target.name]: event.target.value
         });
     }
+
     async dataapi() {
         await axios({
           method: "get",
@@ -202,32 +201,29 @@ class Jacobi extends Component {
         }
         this.jacobi(parseInt(this.state.row));
       }
+
     render() {
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{color: "black", fontWeight: "bold"}}>Jacobi Iteration Method</h2>
+                <h1 style={{textAlign: 'center',fontSize:'30px'}}>Jacobi Iteration Method</h1>
                 <div className="row">
-                    <div className="col">
-                        <Card
-                        bordered={true}
-                        style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF"}}
-                        onChange={this.handleChange}
-                        >
+                    <div className="col" style = {{textAlign: 'center',fontSize:'21px'}}>
+                        
                             
                             {this.state.showDimentionForm && 
                                 <div>
-                                    <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
-                                    <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
+                                    <h4>Row  : &nbsp;&nbsp;<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h4><br />
+                                    <h4>Column  : &nbsp;&nbsp;<Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input></h4><br />
                                     <Button id="dimention_button" onClick= {
                                         ()=>{this.createMatrix(this.state.row, this.state.column);
                                             this.initialSchema(this.state.row)}
                                         }  
-                                        style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
-                                        Submit<br></br>
+                                        size="large"style={{background: "#008080", color: "white"}}>
+                                        Submit
                                     </Button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <Button type="submit"   size="large"
-                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        style={{ color:'black',background:'#f7c602'}}
                                         onClick={() => this.dataapi()}>
                                             Function
                                         </Button>
@@ -236,41 +232,37 @@ class Jacobi extends Component {
                             
                             {this.state.showMatrixForm && 
                                 <div>
-                                    <h2>Matrix [A]</h2><br/>{matrixA}
-                                    <h2>Vector [B]<br/></h2>{matrixB}
+                                    <br />
+                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Matrix [A]</h2><br/>{matrixA}
+                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Vector [B]<br/></h2>{matrixB}
                                     <h2>Initial X<br/></h2>{matrixX}
+                                    <br />
                                     <Button 
-                                        id="matrix_button"  
-                                        style={{background: "blue", color: "white", fontSize: "20px"}}
+                                        id="matrix_button"size="large"
+                                        style={{width: 150 ,background: "#f7c602", color: "black"}}
                                         onClick={()=>this.jacobi(parseInt(this.state.row))}>
                                         Submit
-                                    </Button>                          
+                                    </Button>           
                                 </div>
                             }
                             
-                        </Card>                        
                     </div>
+                    <br />              
                     <div className="col">
                         {this.state.showOutputCard && 
                             <Card
                             title={"Output"}
                             bordered={true}
-                            style={{width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
+                            style={{width: "100%", background: "while", color: "#FFFFFFFF" }}
                             id="outputCard"
                             >
                                 <Table columns={columns} bordered dataSource={dataInTable} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll", border:"2px solid white"}}></Table>
                             </Card>
                         }                          
                     </div>
-
-                    
-
  
-
-                   
                 </div>
-
-                
+             
             </div>
         );
     }

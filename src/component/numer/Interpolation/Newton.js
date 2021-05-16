@@ -75,7 +75,7 @@ class Newton extends Component {
 
 
         this.setState({
-            showInputForm: false,
+            showInputForm: true,
             showTableInput: true,
         })
     }
@@ -158,11 +158,7 @@ class Newton extends Component {
         await this.setState({
             nPoints: api.nPoints,
             X: api.X,
-<<<<<<< HEAD
             interpolatePoint: api.interpolateinput
-=======
-            interpolateinput: api.interpolateinput
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
         });
         x = []
         y = []
@@ -172,18 +168,11 @@ class Newton extends Component {
         await this.createInterpolatePointInput();
         await this.createTableInput(api.nPoints);
         for (let i = 1; i <= api.nPoints; i++) {
-<<<<<<< HEAD
             document.getElementById("x" + i ).value = api.arrayX[i - 1];
             document.getElementById("y" + i).value = api.arrayY[i - 1];
         }
         for (let i = 1; i <= api.interpolateinput; i++) {
             document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
-=======
-          
-            document.getElementById("x" + i ).value = api.arrayX[i - 1];
-          
-          document.getElementById("y" + i).value = api.arrayY[i - 1];
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
         }
         this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
       }
@@ -200,19 +189,19 @@ class Newton extends Component {
                                 
                                     <form style = {{textAlign: 'center',fontSize:'21px'}} id="inputCard">
                                         <h4>Number of points(n)  : &nbsp;&nbsp;               
-                                            <Input size="large" name ="nPoints" style={{ width: 300 }}
+                                            <Input size="large" name ="nPoints" value={this.state.nPoints}style={{ width: 300 }}
                                             onChange={this.handleChange}
                                             />
                                         </h4>
                                         <br></br>
                                         <h4>X : &nbsp;&nbsp;
-                                            <Input size="large" name ="X" style={{ width: 200 }}
+                                            <Input size="large" name ="X" value={this.state.X}style={{ width: 200 }}
                                             onChange={this.handleChange}
                                             />
                                         </h4>
                                         <br></br>
                                         <h4>interpolatePoint : &nbsp;&nbsp;
-                                            <Input size="large" name = "interpolatePoint"style={{ width: 200 }}
+                                            <Input size="large" name = "interpolatePoint"value={this.state.interpolatePoint}style={{ width: 200 }}
                                             onChange={this.handleChange}
                                             />
                                         </h4>
@@ -225,15 +214,16 @@ class Newton extends Component {
                                         </Button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <Button type="submit"   size="large"
-                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        style={{ color:'black',background:'#f7c602'}}
                                         onClick={() => this.dataapi()}>
                                             Function
-                                        </Button>
+                                        </Button><br />
                                         </form>
                             }
                             {/* 2  tempTag  tableTag*/}
                             {this.state.showTableInput &&
                                 <div>
+                                    <br />
                                     <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black", overflowY: "scroll", minWidth: 80, maxHeight: 300 }}></Table>
                                     <br /><h2>InterpolatePoint {parseInt(this.state.interpolatePoint) === 2 ? "(Linear)" :
                                         parseInt(this.state.interpolatePoint) === 3 ? "(Quadratic)" :
@@ -241,8 +231,8 @@ class Newton extends Component {
                                             
                                             {tempTag}
                                     <Button
-                                        id="matrix_button"
-                                        style={{ color:'#ffffff',background: "#008080" }}
+                                        id="matrix_button"size="large"
+                                        style={{ width: 150 ,color:'black',background: "#f7c602" }}
                                         onClick={() => this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X))}>
                                         Submit
                                 </Button>

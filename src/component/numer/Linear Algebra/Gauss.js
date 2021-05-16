@@ -80,10 +80,10 @@ class Gauss extends Component {
                 matrixA.push(<Input style={{
                     width: "18%",
                     height: "50%",
-                    backgroundColor: "#06d9a0",
+                    // backgroundColor: "#06d9a0",
                     marginInlineEnd: "5%",
                     marginBlockEnd: "5%",
-                    color: "white",
+                    // color: "white",
                     fontSize: "18px",
                     fontWeight: "bold"
                 }}
@@ -93,10 +93,10 @@ class Gauss extends Component {
             matrixB.push(<Input style={{
                 width: "18%",
                 height: "50%",
-                backgroundColor: "black",
+                // backgroundColor: "black",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                // color: "white",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -106,7 +106,7 @@ class Gauss extends Component {
         }
 
         this.setState({
-            showDimentionForm: false,
+            showDimentionForm: true,
             showMatrixForm: true,
         })
 
@@ -127,10 +127,7 @@ class Gauss extends Component {
             [event.target.name]: event.target.value
         });
     }
-<<<<<<< HEAD
     
-=======
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
     async dataapi() {
         await axios({
           method: "get",
@@ -155,69 +152,55 @@ class Gauss extends Component {
         }
         this.gauss(this.state.row);
       }
+
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Gauss Elimination</h2>
+                <h1 style={{ textAlign: 'center',fontSize:'30px' }}>Gauss Elimination</h1>
                 <div className="row">
-                    <div className="col" style = {{textAlign: 'center',fontSize:'21px'}}>
-                        
-
-
-                            {this.state.showDimentionForm &&
-                                <div>
-<<<<<<< HEAD
-                                    <h2>Row<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h2>
-                                    <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input><br />
-                                    <Button id="dimention_button" size="large" onClick={
-=======
-                                    <h2>Row</h2><Input size="large" name="row" value={this.state.row}style={InputStyle}></Input>
-                                    <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
-                                        () => this.createMatrix(this.state.row, this.state.column)
-                                    }
-                                        style={{ background: "#008080", color: "white" }}>
-                                        Submit<br></br>
+                    <div className="col" style = {{textAlign: 'center',fontSize:'21px'}}onChange={this.handleChange}>
+                        {this.state.showDimentionForm &&
+                            <div>
+                                <h4>Row  : &nbsp;&nbsp;<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h4><br />
+                                <h4>Column  : &nbsp;&nbsp;<Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input></h4><br />
+                                <Button id="dimention_button" size="large" onClick={
+                                    () => this.createMatrix(this.state.row, this.state.column)
+                                }
+                                    style={{ background: "#008080", color: "white" }}>
+                                    Submit<br></br>
+                                </Button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button type="submit"   size="large"
+                                    style={{ color:'black',background:'#f7c602'}}
+                                    onClick={() => this.dataapi()}>
+                                        Function
                                     </Button>
-<<<<<<< HEAD
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <Button type="submit"   size="large"
-                                        style={{ color:'#ffffff',background:'#f7c602'}}
-                                        onClick={() => this.dataapi()}>
-                                            Function
-                                        </Button>
-=======
-                                    <Button id="dimention_button" onClick={
-                                        () => this.dataapi()
-                                    }
-                                        style={{ background: "#4caf50", color: "white" }}>
-                                        API<br></br>
-                                    </Button>
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
-                                </div>
-                            }
+                            </div>
+                        }
 
-                            {this.state.showMatrixForm &&
-                                <div>
-                                    <h2>Matrix [A]</h2><br />{matrixA}
-                                    <h2>Vector [B]<br /></h2>{matrixB}
-                                    
-                                    <Button
-                                        id="matrix_button"
-                                        style={{ background: "blue", color: "white" }}
-                                        onClick={() => this.gauss(this.state.row)}>
-                                        Submit
-                                    </Button>
-                                </div>
-                            }
+                        {this.state.showMatrixForm &&
+                            <div>
+                                <br />
+                                <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Matrix [A]</h2><br />{matrixA}
+                                <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Vector [B]<br /></h2>{matrixB}
+                                <br/>
+                                <Button
+                                    size="large"
+                                    id="matrix_button"
+                                    style={{ width: 150 ,background: "#f7c602", color: "black" }}
+                                    onClick={() => this.gauss(this.state.row)}>
+                                    Submit
+                                </Button>
+                            </div>
+                        }
                     </div>
+                    <br />
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ background: "#3d683d", color: "#FFFFFFFF" }}
+                                style={{ background: "while", color: "black" }}
                                 onChange={this.handleChange} id="answerCard">
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{output}</p>
                             </Card>

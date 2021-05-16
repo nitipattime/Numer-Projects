@@ -88,10 +88,9 @@ class Jordan extends Component {
                 matrixA.push(<Input style={{
                     width: "18%",
                     height: "50%",
-                    backgroundColor: "#06d9a0",
                     marginInlineEnd: "5%",
                     marginBlockEnd: "5%",
-                    color: "white",
+                    color: "black",
                     fontSize: "18px",
                     fontWeight: "bold"
                 }}
@@ -101,10 +100,9 @@ class Jordan extends Component {
             matrixB.push(<Input style={{
                 width: "18%",
                 height: "50%",
-                backgroundColor: "black",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -114,7 +112,7 @@ class Jordan extends Component {
         }
 
         this.setState({
-            showDimentionForm: false,
+            showDimentionForm: true,
             showMatrixForm: true,
         })
 
@@ -157,63 +155,62 @@ class Jordan extends Component {
           }
           document.getElementById("b" + i).value = api.matrixB[i - 1];
         }
-        this.jordan(this.state.row);
+        this.jordan(api.row);
       }
+
     render() {
         let { row, column } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Gauss-Jordan Method</h2>
+                <h1 style={{ textAlign: 'center',fontSize:'30px'}}>Gauss-Jordan Method</h1>
                 <div className="row">
-                    <div className="col">
-                        <Card
-                            bordered={true}
-                            style={{ width: 400, background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        >
+                    <div className="col" onChange={this.handleChange}style = {{textAlign: 'center',fontSize:'21px'}}>
+                        
 
                             {this.state.showDimentionForm &&
                                 <div>
-                                    <h2>Row</h2><Input size="large" name="row" value={this.state.row}style={InputStyle}></Input>
-                                    <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
+                                    <h4>Row  : &nbsp;&nbsp;<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h4><br />
+                                    <h4>Column  : &nbsp;&nbsp;<Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input></h4><br />
+                                    <Button id="dimention_button" size="large"onClick={
                                         () => this.createMatrix(row, column)
                                     }
-                                        style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>
+                                        style={{ background: "#008080", color: "white" }}>
                                         Submit<br></br>
                                     </Button>
-                                    <Button id="dimention_button" onClick={
-                                        () => this.dataapi()
-                                    }
-                                        style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>
-                                        API<br></br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button type="submit"   size="large"
+                                    style={{ color:'black',background:'#f7c602'}}
+                                    onClick={() => this.dataapi()}>
+                                        Function
                                     </Button>
                                 </div>
                             }
 
                             {this.state.showMatrixForm &&
                                 <div>
-                                    <h2>Matrix [A]</h2><br />{matrixA}
-                                    <h2>Vector [B]<br /></h2>{matrixB}
-                                    
+                                    <br />
+                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Matrix [A]</h2><br />{matrixA}
+                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Vector [B]<br /></h2>{matrixB}
+                                    <br/>
                                     <Button
+                                        size="large"
                                         id="matrix_button"
-                                        style={{ background: "blue", color: "white", fontSize: "20px" }}
+                                        style={{  width: 150 ,background: "#f7c602", color: "black"}}
                                         onClick={() => this.jordan(row)}>
                                         Submit
                                     </Button>
                                 </div>
                             }
 
-                        </Card>
 
                     </div>
-                    <div className="col">
+                    <br />
+                    <div className="col" >
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float: "left" }}
+                                style={{ width: "100%", background: "while", color: "black", float: "left" }}
                                 onChange={this.handleChange} id="answerCard">
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{output}</p>
                             </Card>

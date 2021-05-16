@@ -149,7 +149,7 @@ class Onepoint extends Component {
                     </Button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
-                    style={{ color:'#ffffff',background:'#f7c602'}}
+                    style={{ color:'#black',background:'#f7c602'}}
                     onClick={() => this.dataapi()}
                     >
                       Function

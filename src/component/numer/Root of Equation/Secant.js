@@ -158,7 +158,7 @@ class Secant extends Component {
                     </Button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
-                    style={{ color:'#ffffff',background:'#f7c602'}}
+                    style={{ color:'#black',background:'#f7c602'}}
                     onClick={() => this.dataapi()}
                     >
                       Function
@@ -173,7 +173,7 @@ class Secant extends Component {
                         //     style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
                         //     id="outputCard"
                         // >
-                            <Table columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}
+                            <Table columns={columns} bordered={true}dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}
                             ></Table>
                         // </Card>
                     }

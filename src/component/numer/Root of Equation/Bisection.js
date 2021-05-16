@@ -168,7 +168,7 @@ class Bisection extends Component {
                   </Button>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <Button type="submit"   size="large"
-                  style={{ color:'#ffffff',background:'#f7c602'}}
+                  style={{ color:'black',background:'#f7c602'}}
                   onClick={() => this.dataapi()}
                   >
                     Function
@@ -177,14 +177,8 @@ class Bisection extends Component {
                 <br></br>
                 <div className="row">
                     {this.state.showOutputCard &&
-                        // <Card
-                        //     title={"Output"}
-                        //     bordered={true}
-                        //     style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
-                        //     id="outputCard"
-                        // >
-                            <Table  columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
-                        //  </Card>
+                        
+                            <Table  columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
                     }
                 </div>
             </div>

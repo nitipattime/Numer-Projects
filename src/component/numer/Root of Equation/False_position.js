@@ -4,16 +4,6 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 import { error, func } from '../services/Services';
 var api;
-<<<<<<< HEAD
-=======
-const InputStyle = {
-    background: "#1890ff",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "24px"
-
-};
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
 var dataInTable = []
 const columns = [
     {
@@ -129,10 +119,7 @@ class FalsePosition extends Component {
             [event.target.name]: event.target.value
         });
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
     async dataapi() {
         await axios({method: "get",url: "http://localhost:5000/database/falseposition",}).then((response) => {console.log("response: ", response.data);api = response.data;});
         await this.setState({
@@ -143,10 +130,7 @@ class FalsePosition extends Component {
         })
         this.false_position(this.state.xl,this.state.xr)
       }
-<<<<<<< HEAD
 
-=======
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
     render() {
         let { fx, xl, xr } = this.state;
         return (
@@ -184,7 +168,7 @@ class FalsePosition extends Component {
                     </Button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="submit"   size="large"
-                    style={{ color:'#ffffff',background:'#f7c602'}}
+                    style={{ color:'black',background:'#f7c602'}}
                     onClick={() => this.dataapi()}
                     >
                       Function

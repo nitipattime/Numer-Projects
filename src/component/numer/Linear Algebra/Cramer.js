@@ -4,13 +4,6 @@ import { det } from 'mathjs';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 var api;
-const InputStyle = {
-    background: "#1890ff",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "24px"
-
-};
 
 
 var A = [], B = [], answer = [], matrixA = [], matrixB = []
@@ -64,10 +57,8 @@ class Cramer extends Component {
                 matrixA.push(<Input style={{
                     width: "14%",
                     height: "50%",
-                    // backgroundColor: "#06d9a0",
                     marginInlineEnd: "5%",
                     marginBlockEnd: "5%",
-                    // color: "white",
                     fontSize: "18px",
                     fontWeight: "bold"
                 }}
@@ -77,10 +68,8 @@ class Cramer extends Component {
             matrixB.push(<Input style={{
                 width: "14%",
                 height: "50%",
-                // backgroundColor: "black",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                // color: "white",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -88,7 +77,7 @@ class Cramer extends Component {
         }
 
         this.setState({
-            showDimentionForm: false,
+            showDimentionForm: true,
             showMatrixForm: true,
         })
 
@@ -110,6 +99,7 @@ class Cramer extends Component {
             [event.target.name]: event.target.value
         });
     }
+
     async dataapi() {
         await axios({
           method: "get",
@@ -142,59 +132,46 @@ class Cramer extends Component {
                 <h1 style = {{textAlign: 'center',fontSize:'30px'}}>Cramer's Rule</h1>
 
                 <div className="row">
-                    <form style = {{textAlign: 'center',fontSize:'21px'}}>
+                    <div style = {{textAlign: 'center',fontSize:'21px'}}>
                         
 
-                            {this.state.showDimentionForm &&
-                                <div>
-                                    <h4>Row : <Input size="large" name="row" style={{ width: 150 }} value={this.state.row} onChange={this.handleChange}></Input></h4>
-                                    <h4>Column : <Input size="large" name="column" value={this.state.column} style={{ width: 150 }} onChange={this.handleChange}></Input></h4><br />
-<<<<<<< HEAD
-                                    <Button id="dimention_button" size="large"onClick={
-=======
-                                    <Button id="dimention_button" onClick={
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
-                                        () => this.createMatrix(row, column)
-                                    }
-                                        style={{ background: "#008080", color: "white" }}>
-                                        Submit
-                                    </Button>
-<<<<<<< HEAD
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <Button type="submit"   size="large"
-                                        style={{ color:'#ffffff',background:'#f7c602'}}
-                                        onClick={() => this.dataapi()}>
-                                            Function
-                                        </Button>
-=======
-                                    <Button id="dimention_button" onClick={
-                                        () => this.dataapi()
-                                    }
-                                        style={{ background: "#008080", color: "white" }}>
-                                        API
-                                    </Button>
->>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
-                                </div>
-                            }
-                            {this.state.showMatrixForm &&
-                                <div>
-                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Matrix [A]</h2>{matrixA}
-                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Vector [B]</h2>{matrixB}<br/>
-                                    <Button
-                                        size="large"
-                                        id="matrix_button"
-                                        style={{ width: 150 ,background:'#f7c602'}}
-                                        onClick={() => this.cramer()}>
-                                        Submit
+                        {this.state.showDimentionForm &&
+                            <div>
+                                <h4>Row  : &nbsp;&nbsp;<Input size="large" name="row" style={{ width: 150 }} value={this.state.row} onChange={this.handleChange}></Input></h4><br />
+                                <h4>Column  : &nbsp;&nbsp;<Input size="large" name="column" value={this.state.column} style={{ width: 150 }} onChange={this.handleChange}></Input></h4><br />
+                                <Button id="dimention_button" size="large"onClick={
+                                    () => this.createMatrix(row, column)
+                                }
+                                    style={{ background: "#008080", color: "white" }}>
+                                    Submit
                                 </Button>
-                                </div>
-                            }
-
-
-
-                    </form>
-
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button type="submit"   size="large"
+                                    style={{ color:'black',background:'#f7c602'}}
+                                    onClick={() => this.dataapi()}>
+                                        Function
+                                    </Button>
+                            </div>
+                        }
+                        {this.state.showMatrixForm &&
+                            <div>
+                                <br />
+                                <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Matrix [A]</h2>{matrixA}
+                                <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Vector [B]</h2>{matrixB}<br/>
+                                <Button
+                                    size="large"
+                                    id="matrix_button"
+                                    style={{ width: 150 ,background:'#f7c602', color: "black"}}
+                                    onClick={() => this.cramer()}>
+                                    Submit
+                            </Button>
+                            </div>
+                        }
+                    </div>
+                        <br />
+                        <br />
                     <div className="col">
+                    
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
