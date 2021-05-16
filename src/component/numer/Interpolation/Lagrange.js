@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {Card, Input, Button, Table} from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
+import axios from 'axios';
+
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white", 
@@ -142,6 +144,36 @@ class Lagrange extends Component {
             [event.target.name]: event.target.value
         });
     }
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/lagrange",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+            nPoints: api.nPoints,
+            X: api.X,
+            interpolatePoint: api.interpolateinput,
+        });
+        x = []
+        y = []
+        interpolatePoint = []
+        tempTag = []
+        tableTag = []
+        await this.createInterpolatePointInput();
+        await this.createTableInput(api.nPoints);
+        for (let i = 1; i <= api.nPoints; i++) {
+          document.getElementById("x" + i ).value = api.arrayX[i - 1];
+          document.getElementById("y" + i).value = api.arrayY[i - 1];
+        }
+        for (let i = 1; i <= api.interpolateinput; i++) {
+          document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
+        }
+        this.lagrange(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
+      }
+
     render() {
         return(
             <div style={{padding: "30px" }}>
@@ -165,6 +197,12 @@ class Lagrange extends Component {
                                         style={{background: "#4caf50", color: "white" }}>
                                         Submit
                                     </Button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        onClick={() => this.dataapi()}>
+                                            Function
+                                        </Button>
                                 </div> 
                             }
                             {this.state.showTableInput && 
@@ -179,6 +217,7 @@ class Lagrange extends Component {
                                         onClick={()=>this.lagrange(parseInt(this.state.interpolatePoint), parseFloat(this.state.X))}>
                                         Submit
                                     </Button>
+                                    
                                 </div>
                             }
                      

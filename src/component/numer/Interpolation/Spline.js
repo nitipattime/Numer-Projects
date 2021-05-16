@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -129,6 +130,34 @@ class Spline extends Component {
 
         return this.solve(A, ks);
     }
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/newtondivide",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+            nPoints: api.nPoints,
+            X: api.X
+        });
+        x = []
+        y = []
+        // interpolatePoint = []
+        // tempTag = []
+        tableTag = []
+        await this.createInterpolatePointInput();
+        await this.createTableInput(api.nPoints);
+        for (let i = 1; i <= api.nPoints; i++) {
+            document.getElementById("x" + i ).value = api.arrayX[i - 1];
+            document.getElementById("y" + i).value = api.arrayY[i - 1];
+        }
+        for (let i = 1; i <= api.interpolateinput; i++) {
+            document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
+        }
+        this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
+      }
 
     solve(A, ks) {
         var m = A.length;
@@ -182,12 +211,27 @@ class Spline extends Component {
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Spline Interpolation</h2>
                 <div className="row">
-                    <div className="col">
-                        <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        >
+                    <div className="col"onChange={this.handleChange}>
+                        
+                            {this.state.showInputForm &&
+                                <div>
+                                    <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
+                                    <h2>X</h2><Input size="large" name="X" style={InputStyle}></Input>
+                                    <Button id="dimention_button" onClick={
+                                        () => { this.createTableInput(parseInt(this.state.nPoints)) }
+                                    }
+                                        style={{ background: "#4caf50", color: "white" }}>
+                                        Submit<br></br>
+                                    </Button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        onClick={() => this.dataapi()}>
+                                            Function
+                                        </Button>
+                                </div>
+                            }
+                            
                             {this.state.showTableInput &&
                                 <div>
                                     <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "white", overflowY: "scroll", minWidth: 120, maxHeight: 300 }}>
@@ -201,20 +245,7 @@ class Spline extends Component {
                                 </Button>
                                 </div>}
 
-                            {this.state.showInputForm &&
-                                <div>
-                                    <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                                    <h2>X</h2><Input size="large" name="X" style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
-                                        () => { this.createTableInput(parseInt(this.state.nPoints)) }
-                                    }
-                                        style={{ background: "#4caf50", color: "white" }}>
-                                        Submit<br></br>
-                                    </Button>
-                                </div>
-                            }
 
-                        </Card>
                     </div>
                     <div className="col">
                         {this.state.showOutputCard &&

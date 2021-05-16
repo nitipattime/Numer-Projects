@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {Card, Input, Button, Table} from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white", 
@@ -174,6 +175,33 @@ class Jacobi extends Component {
             [event.target.name]: event.target.value
         });
     }
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/jacobi",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+          row: api.row,
+          column: api.column
+        });
+        matrixA = [];
+        matrixB = [];
+        matrixX = [];
+        await this.createMatrix(api.row, api.column);
+        await this.initialSchema(this.state.row);
+        for (let i = 1; i <= api.row; i++) {
+          for (let j = 1; j <= api.column; j++) {
+            document.getElementById("a" + i + "" + j).value =
+              api.matrixA[i - 1][j - 1];
+          }
+          document.getElementById("b" + i).value = api.matrixB[i - 1];
+          document.getElementById("x" + i).value = api.matrixX[i - 1];
+        }
+        this.jacobi(parseInt(this.state.row));
+      }
     render() {
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
@@ -197,6 +225,12 @@ class Jacobi extends Component {
                                         style={{background: "#4caf50", color: "white", fontSize: "20px"}}>
                                         Submit<br></br>
                                     </Button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        onClick={() => this.dataapi()}>
+                                            Function
+                                        </Button>
                                 </div> 
                             }
                             

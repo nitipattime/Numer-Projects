@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Input, Button } from 'antd';
 import { det } from 'mathjs';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
-
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -110,32 +110,57 @@ class Cramer extends Component {
             [event.target.name]: event.target.value
         });
     }
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/cramer",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+          row: api.row,
+          column: api.column,
+        });
+        matrixA = [];
+        matrixB = [];
+        await this.createMatrix(api.row, api.column);
+        for (let i = 1; i <= api.row; i++) {
+          for (let j = 1; j <= api.column; j++) {
+            document.getElementById("a" + i + "" + j).value =
+              api.matrixA[i - 1][j - 1];
+          }
+          document.getElementById("b" + i).value = api.matrixB[i - 1];
+        }
+        this.cramer();
+      }
 
     render() {
         let { row, column } = this.state;
         return (
             <div style={{ background: "#FFFF",padding: "30px" }}>
-                {/* <h2 style={{ color: "black", fontWeight: "bold" }}>Cramer's Rule</h2> */}
                 <h1 style = {{textAlign: 'center',fontSize:'30px'}}>Cramer's Rule</h1>
 
                 <div className="row">
                     <form style = {{textAlign: 'center',fontSize:'21px'}}>
-                        {/* <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        > */}
+                        
 
                             {this.state.showDimentionForm &&
                                 <div>
-                                    <h4>Row : <Input size="large" name="row" style={{ width: 150 }} onChange={this.handleChange}></Input></h4>
-                                    <h4>Column : <Input size="large" name="column" style={{ width: 150 }} onChange={this.handleChange}></Input></h4><br />
-                                    <Button id="dimention_button" onClick={
+                                    <h4>Row : <Input size="large" name="row" style={{ width: 150 }} value={this.state.row} onChange={this.handleChange}></Input></h4>
+                                    <h4>Column : <Input size="large" name="column" value={this.state.column} style={{ width: 150 }} onChange={this.handleChange}></Input></h4><br />
+                                    <Button id="dimention_button" size="large"onClick={
                                         () => this.createMatrix(row, column)
                                     }
                                         style={{ background: "#008080", color: "white" }}>
                                         Submit
                                     </Button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        onClick={() => this.dataapi()}>
+                                            Function
+                                        </Button>
                                 </div>
                             }
                             {this.state.showMatrixForm &&
@@ -154,7 +179,6 @@ class Cramer extends Component {
 
 
 
-                        {/* </Card> */}
                     </form>
 
                     <div className="col">
@@ -162,7 +186,7 @@ class Cramer extends Component {
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ width: "100%", background: "#3d683d", color: "#FFFFFFFF", float: "left" }}
+                                style={{ width: "100%", background: "while", color: "#FFFFFFFF", float: "left" }}
                                 onChange={this.handleChange}>
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{answer}</p>
                             </Card>

@@ -62,19 +62,13 @@ class App extends React.Component {
             </SubMenu>
 
             <SubMenu key="sub2" icon={<LaptopOutlined />} title="Linear Algebraic Equations">
-              {/* <SubMenu key="sub2-1" icon={<LaptopOutlined />} title="Direct Method"> */}
                 <Menu.Item key="7"><Link to = '/Creamer'>Cramer's Rule</Link></Menu.Item>
                 <Menu.Item key="8"><Link to = '/Gauss'>Gauss Elimination Method</Link></Menu.Item>
                 <Menu.Item key="9"><Link to = '/GaussJordan'>Gauss-Jordan Method</Link></Menu.Item>
                 <Menu.Item key="10"><Link to = '/LU'>LU Decomposition Method</Link></Menu.Item>
                 <Menu.Item key="11"><Link to = '/Cholesky'>Cholesky Decomposition Method</Link></Menu.Item>
-              {/* </SubMenu> */}
-              {/* <SubMenu key="sub2-2" icon={<LaptopOutlined />} title="Iterative Method"> */}
                 <Menu.Item key="12"><Link to = '/Jacobi'>Jacobi</Link></Menu.Item>
                 <Menu.Item key="13"><Link to = '/Seidel'>Seidel</Link></Menu.Item>
-                <Menu.Item key="14"><Link to = '/'>option16</Link></Menu.Item>
-                {/* <Menu.Item key="15">option17</Menu.Item> */}
-              {/* </SubMenu> */}
             </SubMenu>
 
             <SubMenu key="sub3" icon={<LaptopOutlined />} title="Interpolation and Extrapolation">

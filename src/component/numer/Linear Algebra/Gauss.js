@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Input, Button } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
-
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -127,29 +127,56 @@ class Gauss extends Component {
             [event.target.name]: event.target.value
         });
     }
+    
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/gauss",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+          row: api.row,
+          column: api.column,
+        });
+        matrixA = [];
+        matrixB = [];
+        await this.createMatrix(api.row, api.column);
+        for (let i = 1; i <= api.row; i++) {
+          for (let j = 1; j <= api.column; j++) {
+            document.getElementById("a" + i + "" + j).value =
+              api.matrixA[i - 1][j - 1];
+          }
+          document.getElementById("b" + i).value = api.matrixB[i - 1];
+        }
+        this.gauss(this.state.row);
+      }
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Gauss Elimination</h2>
                 <div className="row">
-                    <div className="col">
-                        <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        >
+                    <div className="col" style = {{textAlign: 'center',fontSize:'21px'}}>
+                        
 
 
                             {this.state.showDimentionForm &&
                                 <div>
-                                    <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
-                                    <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
+                                    <h2>Row<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h2>
+                                    <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input><br />
+                                    <Button id="dimention_button" size="large" onClick={
                                         () => this.createMatrix(this.state.row, this.state.column)
                                     }
-                                        style={{ background: "#4caf50", color: "white" }}>
+                                        style={{ background: "#008080", color: "white" }}>
                                         Submit<br></br>
                                     </Button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button type="submit"   size="large"
+                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        onClick={() => this.dataapi()}>
+                                            Function
+                                        </Button>
                                 </div>
                             }
 
@@ -166,7 +193,6 @@ class Gauss extends Component {
                                     </Button>
                                 </div>
                             }
-                        </Card>                        
                     </div>
                     <div className="col">
                         {this.state.showOutputCard &&

@@ -1,18 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func } from '../services/Services';
-// import Graph from './Graph';
 import axios from 'axios';
-
-const InputStyle = {
-    background: "#1890ff",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "24px"
-
-};
 
 var api;
 var dataInTable = []
@@ -104,7 +94,6 @@ class Bisection extends Component {
         this.createTable(data['xl'], data['xr'], data['x'], data['error']);
         this.setState({
             showOutputCard: true,
-            // showGraph: true
         })
 
 
@@ -138,82 +127,16 @@ class Bisection extends Component {
           xl:api.xl,
           xr:api.xr
         })
+        this.bisection(this.state.xl,this.state.xr)
       }
       
-    //   this.setState({
-    //             fx:response['fx'],
-    //             xl:response['xl'],
-    //             xr:response['xr']
-    //         })
-            
-    //         this.bisection(this.state.xl,this.state.xr);
-    // dataapi = async()=>{
-    //     var response = await axios.get('http://localhost:3000/bisec').then(res => {return res.data});
-    //     console.log(response)
-    //     this.setState({
-    //         fx:response['fx'],
-    //         xl:response['xl'],
-    //         xr:response['xr']
-    //     })
-        
-    //     this.bisection(this.state.xl,this.state.xr);
-        
-    // }
-    // dataapis = async()=>{
-    //     var response = await axios.get('http://localhost:5000/database/bisection').then(res => {return res.data});
-    //     console.log(response)
-    //     this.setState({
-    //         fx:response['fx'],
-    //         xl:response['xl'],
-    //         xr:response['xr']
-    //     })
-        
-    //     this.bisection(this.state.xl,this.state.xr);
-        
-    // }
-    
-    // async example() {
-    //     await axios({
-    //       method: "get",
-    //       url: "http://localhost:5000/database/bisection",
-    //     }).then((response) => {
-    //       console.log("response: ", response.data);
-    //       api = response.data;
-    //     });
-    //     await setLatex(api.latex)
-    //     await setVariable({
-    //       xl:api.xl,
-    //       xr:api.xr
-    //     })
-    //   }
+   
     render() {
         let { fx, xl, xr } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                {/* <h2 style={{ color: "black", fontWeight: "bold" }}>Bisection</h2> */}
                 <h1 style = {{textAlign: 'center',fontSize:'30px'}}>Bisection Method </h1>
-                {/* <div className="row">
-                    <div className="col">
-                        <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                            id="inputCard"
-                        >
-                            <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                            <h2 style={{color:"white"}}>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
-                            <h2 style={{color:"white"}}>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
-                            <Button id="submit_button" onClick={
-                                () => this.bisection(parseFloat(xl), parseFloat(xr))
-                            }
-                                style={{ background: "#4caf50", color: "white" }}>Submit</Button>
-
-                        </Card>
-                    </div>
-                    <div className="col">
-                        {this.state.showGraph && <Graph fx={fx} title="Bisection Method" />} 
-                    </div>
-                </div> */}
+                
 
                 <form style = {{textAlign: 'center',fontSize:'21px'}} id="inputCard"
                   
