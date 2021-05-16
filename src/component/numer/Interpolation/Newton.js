@@ -158,7 +158,11 @@ class Newton extends Component {
         await this.setState({
             nPoints: api.nPoints,
             X: api.X,
+<<<<<<< HEAD
             interpolatePoint: api.interpolateinput
+=======
+            interpolateinput: api.interpolateinput
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
         });
         x = []
         y = []
@@ -168,11 +172,18 @@ class Newton extends Component {
         await this.createInterpolatePointInput();
         await this.createTableInput(api.nPoints);
         for (let i = 1; i <= api.nPoints; i++) {
+<<<<<<< HEAD
             document.getElementById("x" + i ).value = api.arrayX[i - 1];
             document.getElementById("y" + i).value = api.arrayY[i - 1];
         }
         for (let i = 1; i <= api.interpolateinput; i++) {
             document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
+=======
+          
+            document.getElementById("x" + i ).value = api.arrayX[i - 1];
+          
+          document.getElementById("y" + i).value = api.arrayY[i - 1];
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
         }
         this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
       }

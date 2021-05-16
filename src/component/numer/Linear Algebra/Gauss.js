@@ -127,7 +127,10 @@ class Gauss extends Component {
             [event.target.name]: event.target.value
         });
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
     async dataapi() {
         await axios({
           method: "get",
@@ -163,20 +166,35 @@ class Gauss extends Component {
 
                             {this.state.showDimentionForm &&
                                 <div>
+<<<<<<< HEAD
                                     <h2>Row<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h2>
                                     <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input><br />
                                     <Button id="dimention_button" size="large" onClick={
+=======
+                                    <h2>Row</h2><Input size="large" name="row" value={this.state.row}style={InputStyle}></Input>
+                                    <h2>Column</h2><Input size="large" name="column" value={this.state.column}style={InputStyle}></Input>
+                                    <Button id="dimention_button" onClick={
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
                                         () => this.createMatrix(this.state.row, this.state.column)
                                     }
                                         style={{ background: "#008080", color: "white" }}>
                                         Submit<br></br>
                                     </Button>
+<<<<<<< HEAD
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <Button type="submit"   size="large"
                                         style={{ color:'#ffffff',background:'#f7c602'}}
                                         onClick={() => this.dataapi()}>
                                             Function
                                         </Button>
+=======
+                                    <Button id="dimention_button" onClick={
+                                        () => this.dataapi()
+                                    }
+                                        style={{ background: "#4caf50", color: "white" }}>
+                                        API<br></br>
+                                    </Button>
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
                                 </div>
                             }
 

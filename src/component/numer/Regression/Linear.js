@@ -144,6 +144,7 @@ class Linear extends Component {
             [event.target.name]: event.target.value
         });
     }
+<<<<<<< HEAD
     async dataapi() {
         await axios({
           method: "get",
@@ -163,6 +164,9 @@ class Linear extends Component {
         this.initialValue(parseInt(this.state.nPoints));
         this.linear(parseInt(this.state.nPoints));
       }
+=======
+
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>

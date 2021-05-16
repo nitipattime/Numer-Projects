@@ -149,18 +149,31 @@ class Cramer extends Component {
                                 <div>
                                     <h4>Row : <Input size="large" name="row" style={{ width: 150 }} value={this.state.row} onChange={this.handleChange}></Input></h4>
                                     <h4>Column : <Input size="large" name="column" value={this.state.column} style={{ width: 150 }} onChange={this.handleChange}></Input></h4><br />
+<<<<<<< HEAD
                                     <Button id="dimention_button" size="large"onClick={
+=======
+                                    <Button id="dimention_button" onClick={
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
                                         () => this.createMatrix(row, column)
                                     }
                                         style={{ background: "#008080", color: "white" }}>
                                         Submit
                                     </Button>
+<<<<<<< HEAD
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <Button type="submit"   size="large"
                                         style={{ color:'#ffffff',background:'#f7c602'}}
                                         onClick={() => this.dataapi()}>
                                             Function
                                         </Button>
+=======
+                                    <Button id="dimention_button" onClick={
+                                        () => this.dataapi()
+                                    }
+                                        style={{ background: "#008080", color: "white" }}>
+                                        API
+                                    </Button>
+>>>>>>> 7e6d19a1a8d8b8e877415c23d01132855e795070
                                 </div>
                             }
                             {this.state.showMatrixForm &&
