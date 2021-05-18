@@ -51,6 +51,7 @@ class Lagrange extends Component {
         this.lagrange = this.lagrange.bind(this);
     
     }  
+    // 1 สร้าง input เก็บ input ใน x[],y[]
     createTableInput(n) {
         for (var i=1 ; i<=n ; i++) {
             x.push(<Input style={{
@@ -88,6 +89,7 @@ class Lagrange extends Component {
             showTableInput: true,
         })
     }
+    // 1 เก็บ input ใน tempTag[]
     createInterpolatePointInput(){
         for (var i=1 ; i<=this.state.interpolatePoint ; i++) {
             tempTag.push(<Input style={{
@@ -126,7 +128,7 @@ class Lagrange extends Component {
         console.log(numerate/denominate)
         return parseFloat(numerate/denominate);
     }
-
+    // ใช้  L(X, index, n) , initialValue()
     lagrange(n, X) {
         fx = 0
         this.initialValue()

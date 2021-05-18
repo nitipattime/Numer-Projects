@@ -14,9 +14,9 @@ import Creamer from './component/numer/Linear Algebra/Cramer';
 import Gauss from './component/numer/Linear Algebra/Gauss';
 import GaussJordan from './component/numer/Linear Algebra/Jordan';
 import LU from './component/numer/Linear Algebra/LU';
-import Cholesky from './component/numer/Linear Algebra/Cholesky';
+// import Cholesky from './component/numer/Linear Algebra/Cholesky';
 import Jacobi from './component/numer/Linear Algebra/Jacobi';
-import Seidel from './component/numer/Linear Algebra/Seidel';
+// import Seidel from './component/numer/Linear Algebra/Seidel';
 
 import Lagrange from './component/numer/Interpolation/Lagrange';
 import NewtonIn from './component/numer/Interpolation/Newton';
@@ -24,7 +24,7 @@ import Spline from './component/numer/Interpolation/Spline';
 
 import Linear from './component/numer/Regression/Linear';
 import Polynomial from './component/numer/Regression/Polynomial';
-import Multiple from './component/numer/Regression/MultipleLinear';
+// import Multiple from './component/numer/Regression/MultipleLinear';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -66,9 +66,9 @@ class App extends React.Component {
                 <Menu.Item key="8"><Link to = '/Gauss'>Gauss Elimination Method</Link></Menu.Item>
                 <Menu.Item key="9"><Link to = '/GaussJordan'>Gauss-Jordan Method</Link></Menu.Item>
                 <Menu.Item key="10"><Link to = '/LU'>LU Decomposition Method</Link></Menu.Item>
-                <Menu.Item key="11"><Link to = '/Cholesky'>Cholesky Decomposition Method</Link></Menu.Item>
+                {/* <Menu.Item key="11"><Link to = '/Cholesky'>Cholesky Decomposition Method</Link></Menu.Item> */}
                 <Menu.Item key="12"><Link to = '/Jacobi'>Jacobi</Link></Menu.Item>
-                <Menu.Item key="13"><Link to = '/Seidel'>Seidel</Link></Menu.Item>
+                {/* <Menu.Item key="13"><Link to = '/Seidel'>Seidel</Link></Menu.Item> */}
             </SubMenu>
 
             <SubMenu key="sub3" icon={<LaptopOutlined />} title="Interpolation and Extrapolation">
@@ -80,7 +80,7 @@ class App extends React.Component {
             <SubMenu key="Regession" icon={<LaptopOutlined />} title="Leat-Squares Regression">
               <Menu.Item key=""><Link to = '/Linear'>Linear Regession</Link></Menu.Item>
               <Menu.Item key=""><Link to = '/Polynomial'>Polynomial Regession</Link></Menu.Item>
-              <Menu.Item key=""><Link to = '/Multiple'>Multiple Linear Regression</Link></Menu.Item>
+              {/* <Menu.Item key=""><Link to = '/Multiple'>Multiple Linear Regression</Link></Menu.Item> */}
             </SubMenu>
 
           </Menu>
@@ -100,9 +100,9 @@ class App extends React.Component {
           <Route path = "/Gauss" component={Gauss}/>
           <Route path = "/GaussJordan" component={GaussJordan}/>
           <Route path = "/LU" component={LU}/>
-          <Route path = "/Cholesky" component={Cholesky}/>
+          {/* <Route path = "/Cholesky" component={Cholesky}/> */}
           <Route path = "/Jacobi" component={Jacobi}/>
-          <Route path = "/Seidel" component={Seidel}/>
+          {/* <Route path = "/Seidel" component={Seidel}/> */}
 
           <Route path = "/Lagrange" component={Lagrange}/>
           <Route path = "/NewtonIn" component={NewtonIn}/>
@@ -110,7 +110,7 @@ class App extends React.Component {
 
           <Route path = "/Linear" component={Linear}/>
           <Route path = "/Polynomial" component={Polynomial}/>
-          <Route path = "/Multiple" component={Multiple}/>
+          {/* <Route path = "/Multiple" component={Multiple}/> */}
           
           </Switch>
         </Content>

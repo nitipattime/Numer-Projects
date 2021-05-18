@@ -4,13 +4,7 @@ import 'antd/dist/antd.css';
 import { inv, multiply, sum } from 'mathjs';
 import axios from 'axios';
 var api;
-const InputStyle = {
-    background: "#1890ff",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "24px"
 
-};
 var columns = [
     {
         title: "No.",
@@ -50,6 +44,7 @@ class Linear extends Component {
 
 
     }
+    // 1 สร้าง input เก็บ input ใน x[],y[]
     createTableInput(n) {
         for (var i = 1; i <= n; i++) {
             x.push(<Input style={{
@@ -86,6 +81,7 @@ class Linear extends Component {
             showTableInput: true
         })
     }
+    // 2  ประมวลผลต่อ
     initialValue(n) {
         x = new Array(n + 1)
         y = []
@@ -97,6 +93,7 @@ class Linear extends Component {
             y[i] = parseFloat(document.getElementById("y" + i).value);
         }
     }
+    // 2 ประมวลผลต่อ
     linear(n) {
         var matrixX = [2], matrixY = [2], exponent = 0
         for (var i = 0; i < 2; i++) {
@@ -123,6 +120,7 @@ class Linear extends Component {
             showOutputCard: true
         })
     }
+
     summation(A, exponent) {
         var sum = 0
         for (var i = 1; i < A.length; i++) {
@@ -137,6 +135,7 @@ class Linear extends Component {
         }
         return sum
     }
+
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value

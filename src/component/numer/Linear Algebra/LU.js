@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Input, Button } from 'antd';
-// import '../../screen.css';
 import 'antd/dist/antd.css';
 import { lusolve, format } from 'mathjs';
+import axios from 'axios';
+var api;
 const InputStyle = {
     background: "#1890ff",
     color: "white",
@@ -52,10 +53,10 @@ class LU extends Component {
                 matrixA.push(<Input style={{
                     width: "18%",
                     height: "50%",
-                    backgroundColor: "#06d9a0",
+                    // backgroundColor: "#06d9a0",
                     marginInlineEnd: "5%",
                     marginBlockEnd: "5%",
-                    color: "white",
+                    color: "black",
                     fontSize: "18px",
                     fontWeight: "bold"
                 }}
@@ -65,10 +66,10 @@ class LU extends Component {
             matrixB.push(<Input style={{
                 width: "18%",
                 height: "50%",
-                backgroundColor: "black",
+                // backgroundColor: "black",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -78,7 +79,7 @@ class LU extends Component {
         }
 
         this.setState({
-            showDimentionForm: false,
+            showDimentionForm: true,
             showMatrixForm: true,
         })
 
@@ -99,53 +100,78 @@ class LU extends Component {
             [event.target.name]: event.target.value
         });
     }
+    async dataapi() {
+        await axios({
+          method: "get",
+          url: "http://localhost:5000/database/LU",
+        }).then((response) => {
+          console.log("response: ", response.data);
+          api = response.data;
+        });
+        await this.setState({
+          row: api.row,
+          column: api.column,
+        });
+        await this.createMatrix(api.row, api.column);
+        for (let i = 1; i <= api.row; i++) {
+          for (let j = 1; j <= api.column; j++) {
+            document.getElementById("a" + i + "" + j).value =
+              api.arrayA[i - 1][j - 1];
+          }
+          document.getElementById("b" + i).value = api.arrayB[i - 1];
+        }
+        await this.Lu();
+      }
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>LU Decomposition</h2>
+                <h1 style={{ textAlign: 'center',fontSize:'30px'}}>LU Decomposition</h1>
                 <div className="row">
-                    <div className="col">
-                        <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        >
+                    <div className="col" onChange={this.handleChange} style = {{textAlign: 'center',fontSize:'21px'}}>
+                        
 
 
                             {this.state.showDimentionForm &&
                                 <div>
-                                    <h2>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
-                                    <h2>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
+                                    <h4>Row  : &nbsp;&nbsp;<Input size="large" name="row" value={this.state.row}style={{ width: 150 }}></Input></h4><br />
+                                    <h4>Column  : &nbsp;&nbsp;<Input size="large" name="column" value={this.state.column}style={{ width: 150 }}></Input></h4><br />
+                                    <Button id="dimention_button" size="large"onClick={
                                         () => this.createMatrix(this.state.row, this.state.column)
                                     }
-                                        style={{ background: "#4caf50", color: "white" }}>
+                                        style={{ background: "#008080", color: "white" }}>
                                         Submit
                                 </Button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button type="submit"   size="large"
+                                    style={{ color:'black',background:'#f7c602'}}
+                                    onClick={() => this.dataapi()}>
+                                        Function
+                                    </Button>
                                 </div>
                             }
 
                             {this.state.showMatrixForm &&
                                 <div>
-                                    <h2>Matrix [A]</h2><br />{matrixA}
-                                    <h2>Vector [B]<br /></h2>{matrixB}
-                                    
-                                <Button
+                                    <br />
+                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Matrix [A]</h2><br />{matrixA}
+                                    <h2 style = {{textAlign: 'center',fontSize:'30px'}}>Vector [B]<br /></h2>{matrixB}
+                                    <br />
+                                <Button size="large"
                                         id="matrix_button"
-                                        style={{ background: "blue", color: "white"}}
+                                        style={{ width: 150 ,background: "#f7c602", color: "black"}}
                                         onClick={() => this.Lu()}>
                                         Submit
                                 </Button>
                                 </div>
                             }
-                        </Card>
                     </div>
+                    <br />
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ background: "#3d683d", color: "#FFFFFFFF" }}
+                                style={{ background: "white", color: "black" }}
                                 onChange={this.handleChange} id="answerCard">
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{output}</p>
                             </Card>

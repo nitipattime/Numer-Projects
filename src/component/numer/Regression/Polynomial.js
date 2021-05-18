@@ -54,24 +54,24 @@ class Polynomial extends Component {
     createTableInput(n, m) {
         for (var i = 1; i <= n; i++) {
             x.push(<Input style={{
-                width: "70%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "50%",
+                height: "40%",
+                // backgroundColor: "black",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold",
                 justifyContent: "center"
             }}
                 id={"x" + i} key={"x" + i} placeholder={"x" + i} />);
             y.push(<Input style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "50%",
+                height: "40%",
+                // backgroundColor: "black",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -93,7 +93,7 @@ class Polynomial extends Component {
         }
 
         this.setState({
-            showInputForm: false,
+            showInputForm: true,
             showTableInput: true
         })
     }
@@ -155,7 +155,7 @@ class Polynomial extends Component {
     async dataapi() {
         await axios({
           method: "get",
-          url: "http://localhost:5000/database/linear",
+          url: "http://localhost:5000/database/polynomial",
         }).then((response) => {
           console.log("response: ", response.data);
           api = response.data;
@@ -172,9 +172,10 @@ class Polynomial extends Component {
           document.getElementById("x" + i).value = api.arrayX[i - 1];
           document.getElementById("y" + i).value = api.arrayY[i - 1];
         }
-        // this.initialValue(parseInt(this.state.nPoints), parseInt(this.state.m));
-        // this.polynomial(parseInt(this.state.nPoints), parseInt(this.state.m));
+        this.initialValue(parseInt(this.state.nPoints), parseInt(this.state.m));
+        this.polynomial(parseInt(this.state.nPoints), parseInt(this.state.m));
       }
+      
 
     summation(A, exponent) {
         var sum = 0
@@ -199,26 +200,22 @@ class Polynomial extends Component {
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Polynomial Regression</h2>
+                <h1 style={{ textAlign: 'center',fontSize:'30px' }}>Polynomial Regression</h1>
                 <div className="row">
-                    <div className="col"onChange={this.handleChange}>
-                        {/* <Card
-                            bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
-                            onChange={this.handleChange}
-                        > */}
+                    <div className="col"onChange={this.handleChange}style = {{textAlign: 'center',fontSize:'21px'}}>
+                        
                             {this.state.showInputForm &&
                                 <div>
-                                    <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                                    <h2>Order(m)</h2><Input size="large" name="m" style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
+                                    <h4>Number of points(n) : &nbsp;&nbsp;<Input size="large" name="nPoints" value={this.state.nPoints} style={{ width: 300 }}></Input></h4><br />
+                                    <h4>Order(m) : &nbsp;&nbsp;<Input size="large" name="m" value={this.state.m} style={ { width: 300 }}></Input></h4><br />
+                                    <Button id="dimention_button" size="large"onClick={
                                         () => this.createTableInput(parseInt(this.state.nPoints), parseInt(this.state.m))}
-                                        style={{ background: "#4caf50", color: "white", fontSize: "20px" }}>
+                                        style={{ background: "#008080", color: "white"}}>
                                         Submit<br></br>
                                     </Button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <Button type="submit"   size="large"
-                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        style={{ color:'black',background:'#f7c602'}}
                                         onClick={() => this.dataapi()}>
                                             Function
                                         </Button>
@@ -227,10 +224,11 @@ class Polynomial extends Component {
 
                             {this.state.showTableInput &&
                                 <div>
-                                    <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "white", overflowY: "scroll", minWidth: 120, maxHeight: 300 }}></Table>
+                                    <br />
+                                    <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "white", overflowY: "scroll", minWidth: 120, maxHeight: 300 }}></Table><br />
                                     <Button
-                                        id="matrix_button"
-                                        style={{ background: "blue", color: "white", fontSize: "20px" }}
+                                        id="matrix_button"size="large"
+                                        style={{width: 150 , background: "#f7c602", color: "black" }}
                                         onClick={() => {
                                             this.initialValue(parseInt(this.state.nPoints), parseInt(this.state.m));
                                             this.polynomial(parseInt(this.state.nPoints), parseInt(this.state.m))
@@ -241,14 +239,14 @@ class Polynomial extends Component {
                                 </div>
                             }
 
-                        {/* </Card> */}
                     </div>
+                    <br />
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ border: "2px solid black", background: "rgb(61, 104, 61) none repeat scroll 0% 0%", color: "white" }}
+                                style={{  background: "white", color: "black" }}
                             >
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>x = {JSON.stringify(answer).replace(',', '\n')}</p>
                             </Card>

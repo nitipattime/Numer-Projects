@@ -29,7 +29,7 @@ class Gauss extends Component {
     }
 
     gauss(n) {
-        this.initMatrix()
+        this.initMatrix() // เอา array A[],B[] มาคำนวนต่อ
         if (A[0][0] === 0) { //pivoting
             var tempRow = JSON.parse(JSON.stringify(A[0]));
             var tempColumn = B[0];
@@ -68,6 +68,7 @@ class Gauss extends Component {
         });
 
     }
+    // สร้าง inputโดยใช้ matrixA[],matrixB[] ในการเก็บtag input และกำหนด id a,b
     createMatrix(row, column) {
         A = []
         B = []
@@ -112,6 +113,7 @@ class Gauss extends Component {
 
 
     }
+    // ดึงค่าจาก id a,b มาเก็บใน array A[],B[]
     initMatrix() {
         for (var i = 0; i < this.state.row; i++) {
             A[i] = []

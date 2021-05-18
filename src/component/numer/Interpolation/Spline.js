@@ -48,23 +48,21 @@ class Spline extends Component {
     createTableInput(n) {
         for (var i = 1; i <= n; i++) {
             x.push(<Input style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "50%",
+                height: "40%",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
                 id={"x" + i} key={"x" + i} placeholder={"x" + i} />);
             y.push(<Input style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "black",
+                width: "50%",
+                height: "40%",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
-                color: "white",
+                color: "black",
                 fontSize: "18px",
                 fontWeight: "bold"
             }}
@@ -78,7 +76,7 @@ class Spline extends Component {
 
 
         this.setState({
-            showInputForm: false,
+            showInputForm: true,
             showTableInput: true,
         })
     }
@@ -133,7 +131,7 @@ class Spline extends Component {
     async dataapi() {
         await axios({
           method: "get",
-          url: "http://localhost:5000/database/newtondivide",
+          url: "http://localhost:5000/database/spline",
         }).then((response) => {
           console.log("response: ", response.data);
           api = response.data;
@@ -142,21 +140,14 @@ class Spline extends Component {
             nPoints: api.nPoints,
             X: api.X
         });
-        x = []
-        y = []
-        // interpolatePoint = []
-        // tempTag = []
-        tableTag = []
-        await this.createInterpolatePointInput();
         await this.createTableInput(api.nPoints);
         for (let i = 1; i <= api.nPoints; i++) {
             document.getElementById("x" + i ).value = api.arrayX[i - 1];
             document.getElementById("y" + i).value = api.arrayY[i - 1];
         }
-        for (let i = 1; i <= api.interpolateinput; i++) {
-            document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
-        }
-        this.newton_difference(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
+        await this.initialValue(parseFloat(api.X));
+        await this.initialValue(parseFloat(api.X));
+        
       }
 
     solve(A, ks) {
@@ -209,23 +200,23 @@ class Spline extends Component {
     render() {
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Spline Interpolation</h2>
+                <h1 style={{ textAlign: 'center',fontSize:'30px' }}>Spline Interpolation</h1>
                 <div className="row">
-                    <div className="col"onChange={this.handleChange}>
+                    <div className="col"onChange={this.handleChange} style = {{textAlign: 'center',fontSize:'21px'}}>
                         
                             {this.state.showInputForm &&
                                 <div>
-                                    <h2>Number of points(n)</h2><Input size="large" name="nPoints" style={InputStyle}></Input>
-                                    <h2>X</h2><Input size="large" name="X" style={InputStyle}></Input>
-                                    <Button id="dimention_button" onClick={
+                                    <h4>Number of points(n) : &nbsp;&nbsp;<Input size="large" name="nPoints" value={this.state.nPoints}style={{ width: 200 }}></Input></h4><br />
+                                    <h4>X : &nbsp;&nbsp;<Input size="large" name="X"value={this.state.X} style={{ width: 200 }}></Input></h4><br />
+                                    <Button id="dimention_button" size="large"onClick={
                                         () => { this.createTableInput(parseInt(this.state.nPoints)) }
                                     }
-                                        style={{ background: "#4caf50", color: "white" }}>
+                                        style={{ background: "#008080", color: "white" }}>
                                         Submit<br></br>
                                     </Button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <Button type="submit"   size="large"
-                                        style={{ color:'#ffffff',background:'#f7c602'}}
+                                        style={{ color:'black',background:'#f7c602'}}
                                         onClick={() => this.dataapi()}>
                                             Function
                                         </Button>
@@ -234,12 +225,13 @@ class Spline extends Component {
                             
                             {this.state.showTableInput &&
                                 <div>
+                                    <br />
                                     <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "white", overflowY: "scroll", minWidth: 120, maxHeight: 300 }}>
 
-                                    </Table>
+                                    </Table><br />
                                     <Button
                                         id="matrix_button"
-                                        style={{ background: "blue", color: "white", fontSize: "20px" }}
+                                        size="large"style={{ width: 150 ,background: "#f7c602", color: "black" }}
                                         onClick={() => this.initialValue(parseFloat(this.state.X))}>
                                         Submit
                                 </Button>
@@ -247,12 +239,13 @@ class Spline extends Component {
 
 
                     </div>
+                    <br />
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ background: "#2196f3", color: "#FFFFFFFF", float: "inline-start" }}
+                                style={{ background: "white", color: "black", float: "inline-start" }}
                                 id="outputCard"
                             >
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>X = {answer}</p>

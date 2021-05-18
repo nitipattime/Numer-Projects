@@ -1,32 +1,54 @@
+//! express คือการสร้าง server ให้อยู่ใน port ต่างๆ
 const express = require("express");
+const app = express();
+const database = require("./database.json");
+const port = process.env.PORT || 5000;
+//! Swagger
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
-const database = require("./database.json");
-const app = express();
-const port = process.env.PORT || 5000;
 
+//! API .json req-->คำขอ res-->ตอบสนอง
+app.get("/database",  (req, res) => {
+  res.json(database);
+});
+
+app.get("/database/:name", (req, res) => {
+  const resalt = database.filter(database => database.name == req.params.name)
+  if(resalt.length > 0){
+    res.json(resalt[0])
+  }else{
+    res.json({})
+  }
+});s
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+//! Swagger
+//! กำหนด port swagger
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
-      version: "1.0.0",
+      version: "1.0.1",
       title: "Example API",
       description: "Project API Information",
       servers: ["http://localhost:5000"]
     }
   },
-  // ['.routes/*.js']
+  //// ['.routes/*.js']
   apis: ["App.js"]
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-// const corsOptions = {
-//   origin: ["http://localhost:80","http://localhost:3000"],
-//   optionsSuccessStatus: 200,
-// };
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+//// const corsOptions = {
+////   origin: ["http://localhost:80","http://localhost:3000"],
+////   optionsSuccessStatus: 200,
+//// };
+//! แสดง UI swagger โดย setup ตาม port ที่กำหนดใน swaggerDocs
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(cors())
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Routes
 /**
@@ -39,6 +61,7 @@ app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *      '200':
  *        description: A successful response
  */
+
 /**
  * @swagger
  * /database/{name}:
@@ -53,19 +76,4 @@ app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *      '200':
  *        description: A successful response
  */
-app.get("/database",  (req, res) => {
-  res.json(database);
-});
 
-app.get("/database/:name", (req, res) => {
-  const resalt = database.filter(database => database.name == req.params.name)
-  if(resalt.length > 0){
-    res.json(resalt[0])
-  }else{
-    res.json({})
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});

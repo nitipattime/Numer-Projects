@@ -5,7 +5,6 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 var api;
 
-
 var A = [], B = [], answer = [], matrixA = [], matrixB = []
 class Cramer extends Component {
 
@@ -25,9 +24,8 @@ class Cramer extends Component {
 
     cramer() {
         this.initMatrix();
+        // เอา array A[],B[] มาคำนวนต่อ
         var counter = 0;
-        
-
         while (counter != this.state.row) {
             var transformMatrix = JSON.parse(JSON.stringify(A)); //Deep copy
             for (var i = 0; i < this.state.row; i++) {
@@ -50,7 +48,7 @@ class Cramer extends Component {
         });
 
     }
-
+    // สร้าง inputโดยใช้ matrixA[],matrixB[] ในการเก็บtag input และกำหนด id a,b
     createMatrix(row, column) {
         for (var i = 1; i <= row; i++) {
             for (var j = 1; j <= column; j++) {
@@ -64,6 +62,7 @@ class Cramer extends Component {
                 }}
                     id={"a" + i + "" + j} key={"a" + i + "" + j} placeholder={"a" + i + "" + j} />)
             }
+
             matrixA.push(<br />)
             matrixB.push(<Input style={{
                 width: "14%",
@@ -83,7 +82,7 @@ class Cramer extends Component {
 
 
     }
-
+    // ดึงค่าจาก id a,b มาเก็บใน array A[],B[]
     initMatrix() {
         for (var i = 0; i < this.state.row; i++) {
             A[i] = []
@@ -112,8 +111,8 @@ class Cramer extends Component {
           row: api.row,
           column: api.column,
         });
-        matrixA = [];
-        matrixB = [];
+        // matrixA = [];
+        // matrixB = [];
         await this.createMatrix(api.row, api.column);
         for (let i = 1; i <= api.row; i++) {
           for (let j = 1; j <= api.column; j++) {

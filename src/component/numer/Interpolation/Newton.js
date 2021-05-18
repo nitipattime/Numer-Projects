@@ -44,6 +44,7 @@ class Newton extends Component {
         this.newton_difference = this.newton_difference.bind(this);
 
     }
+    // 1 เก็บ input ใน x[],y[]
     createTableInput(n) {
         for (var i = 1; i <= n; i++) {
             x.push(<Input style={{
@@ -79,6 +80,7 @@ class Newton extends Component {
             showTableInput: true,
         })
     }
+    // 1 เก็บ input ใน tempTag[]
     createInterpolatePointInput() {
         for (var i = 1; i <= this.state.interpolatePoint; i++) {
             tempTag.push(<Input style={{
@@ -105,6 +107,7 @@ class Newton extends Component {
             interpolatePoint[i] = parseInt(document.getElementById("p" + i).value);
         }
     }
+
     C(n) {
         if (n === 1) {
             return 0
@@ -123,8 +126,9 @@ class Newton extends Component {
             return (X - x[interpolatePoint[n]]) * this.findX(n - 1, X)
         }
     }
+    // ใช้  initialValue() , C(n) , findX(n, X)
     newton_difference(n, X) {
-        this.initialValue()
+        this.initialValue() //
         fx = y[1]
         if (n === 2) { //if linear interpolate
             fx += ((y[interpolatePoint[2]] - y[interpolatePoint[1]]) / (x[interpolatePoint[2]] - x[interpolatePoint[1]])) * (X - x[interpolatePoint[1]])
@@ -242,6 +246,7 @@ class Newton extends Component {
                             
                         
                     </div>
+                    
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card

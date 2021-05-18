@@ -138,6 +138,7 @@ class Jacobi extends Component {
             x.push(parseFloat(document.getElementById("x"+(i+1)).value));
         }
     }
+    
     initialSchema(n) {
         for (var i=1 ; i<=n ; i++) {
             columns.push({
