@@ -13,6 +13,7 @@ class Cramer extends Component {
         this.state = {
             row: parseInt(0),
             column: parseInt(0),
+            
             showDimentionForm: true,
             showMatrixForm: false,
             showOutputCard: false
@@ -28,6 +29,11 @@ class Cramer extends Component {
         var counter = 0;
         while (counter != this.state.row) {
             var transformMatrix = JSON.parse(JSON.stringify(A)); //Deep copy
+            // var t = JSON.stringify(A); //Deep copy
+            // var transformMatrix = A; //Deep copy
+            // console.log("A:"+A);
+            // console.log(t);
+            // console.log(transformMatrix);
             for (var i = 0; i < this.state.row; i++) {
                 for (var j = 0; j < this.state.column; j++) {
                     if (j === counter) {
@@ -88,6 +94,7 @@ class Cramer extends Component {
             A[i] = []
             for (var j = 0; j < this.state.column; j++) {
                 A[i][j] = (parseFloat(document.getElementById("a" + (i + 1) + "" + (j + 1)).value));
+                // console.log(document.getElementById("a" + (i + 1) + "" + (j + 1)).value);
             }
             B.push(parseFloat(document.getElementById("b" + (i + 1)).value));
         }
@@ -111,8 +118,6 @@ class Cramer extends Component {
           row: api.row,
           column: api.column,
         });
-        // matrixA = [];
-        // matrixB = [];
         await this.createMatrix(api.row, api.column);
         for (let i = 1; i <= api.row; i++) {
           for (let j = 1; j <= api.column; j++) {
@@ -132,8 +137,7 @@ class Cramer extends Component {
 
                 <div className="row">
                     <div style = {{textAlign: 'center',fontSize:'21px'}}>
-                        
-
+                      
                         {this.state.showDimentionForm &&
                             <div>
                                 <h4>Row  : &nbsp;&nbsp;<Input size="large" name="row" style={{ width: 150 }} value={this.state.row} onChange={this.handleChange}></Input></h4><br />
@@ -152,6 +156,7 @@ class Cramer extends Component {
                                     </Button>
                             </div>
                         }
+                        
                         {this.state.showMatrixForm &&
                             <div>
                                 <br />
@@ -178,7 +183,9 @@ class Cramer extends Component {
                                 style={{ width: "100%", background: "while", color: "#FFFFFFFF", float: "left" }}
                                 onChange={this.handleChange}>
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{answer}</p>
+                                
                             </Card>
+                            
                         }
                     </div>
                 </div>

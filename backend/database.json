@@ -1,11 +1,5 @@
 [
     {
-        "name": "graphical",
-        "start": 0,
-        "finish": 5,
-        "latex": "2x-6"
-    },
-    {
         "name": "bisection",
         "xl": 0.5,
         "xr": 1.5,

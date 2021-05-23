@@ -94,6 +94,7 @@ class Linear extends Component {
         }
     }
     // 2 ประมวลผลต่อ
+    // n + Ex1a1 + Ex2^2a2
     linear(n) {
         var matrixX = [2], matrixY = [2], exponent = 0
         for (var i = 0; i < 2; i++) {

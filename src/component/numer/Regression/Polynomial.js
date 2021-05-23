@@ -248,7 +248,7 @@ class Polynomial extends Component {
                                 bordered={true}
                                 style={{  background: "white", color: "black" }}
                             >
-                                <p style={{ fontSize: "24px", fontWeight: "bold" }}>x = {JSON.stringify(answer).replace(',', '\n')}</p>
+                                <p style={{ fontSize: "24px", fontWeight: "bold" }}>x = {JSON.stringify(answer).replace('' , '')}</p>
                             </Card>
                         }
                     </div>

@@ -60,6 +60,7 @@ class Seidel extends Component {
                 output.push(x[i]);
                 output.push(<br/>);
         }
+        console.log({dataInTable})
         this.setState({
             showOutputCard: true
         });
@@ -132,8 +133,7 @@ class Seidel extends Component {
             showMatrixForm: true,
         })
 
-        
-
+    
     }
     initMatrix() {
         for(var i=0 ; i<this.state.row ; i++) {
@@ -172,6 +172,7 @@ class Seidel extends Component {
         }
         tag += '}';
         dataInTable.push(JSON.parse(tag));  
+        
     }
 
     handleChange(event) {

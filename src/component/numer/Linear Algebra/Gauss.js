@@ -30,7 +30,7 @@ class Gauss extends Component {
 
     gauss(n) {
         this.initMatrix() // เอา array A[],B[] มาคำนวนต่อ
-        if (A[0][0] === 0) { //pivoting
+        if (A[0][0] === 0) { //pivoting สลับ
             var tempRow = JSON.parse(JSON.stringify(A[0]));
             var tempColumn = B[0];
             A[0] = A[1];
@@ -38,17 +38,19 @@ class Gauss extends Component {
             B[0] = B[1];
             B[1] = tempColumn;
         }
-        //Forward eliminated
+        //Forward eliminated ทำสามเหลี่ยมล่าง
         for (var k = 0; k < n; k++) {
             for (var i = k + 1; i < n; i++) {
                 var factor = A[i][k] / A[k][k];
                 for (var j = k; j < n; j++) {
-                    A[i][j] = A[i][j] - factor * A[k][j];
+                    A[i][j] = A[i][j] - (factor * A[k][j]);
+                    // console.log(A[i][j]);
                 }
                 B[i] = B[i] - factor * B[k];
+                // console.log(B[i]);
             }
         }
-        //Backward Substitution
+        // Backward Substitution แทนค่า
         X = new Array(n);
         X[n - 1] = Math.round(B[n - 1] / A[n - 1][n - 1]); //find Xn
         for (i = n - 2; i >= 0; i--) { //find Xn-1 to X1

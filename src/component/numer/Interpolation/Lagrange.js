@@ -4,13 +4,6 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 
 var api;
-const InputStyle = {
-    background: "#1890ff",
-    color: "white", 
-    fontWeight: "bold", 
-    fontSize: "24px"
-
-};
 var columns = [
     {
       title: "No.",
@@ -57,7 +50,6 @@ class Lagrange extends Component {
             x.push(<Input style={{
                 width: "50%",
                 height: "40%", 
-                // backgroundColor:"black", 
                 marginInlineEnd: "5%", 
                 marginBlockEnd: "5%",
                 color: "black",
@@ -68,7 +60,6 @@ class Lagrange extends Component {
             y.push(<Input style={{
                 width: "50%",
                 height: "40%", 
-                // backgroundColor:"black", 
                 marginInlineEnd: "5%", 
                 marginBlockEnd: "5%",
                 color: "black",
@@ -95,7 +86,6 @@ class Lagrange extends Component {
             tempTag.push(<Input style={{
                 width: "10%",
                 height: "40%", 
-                // backgroundColor:"black", 
                 marginInlineEnd: "5%", 
                 marginBlockEnd: "5%",
                 color: "black",
@@ -112,9 +102,10 @@ class Lagrange extends Component {
             x[i] = parseFloat(document.getElementById("x"+i).value);
             y[i] = parseFloat(document.getElementById("y"+i).value);
         }
-        for (i=1 ; i<=this.state.interpolatePoint ; i++) {
-            interpolatePoint[i] = parseFloat(document.getElementById("p"+i).value);
-        }
+        // for (i=1 ; i<=this.state.interpolatePoint ; i++) {
+        //     interpolatePoint[i] = parseFloat(document.getElementById("p"+i).value);
+        //     console.log(interpolatePoint[i]);
+        // }
     }
 
     L(X, index, n) {
@@ -125,7 +116,7 @@ class Lagrange extends Component {
                 denominate *= x[i] - x[index];
             }
         } 
-        console.log(numerate/denominate)
+        // console.log(numerate/denominate)
         return parseFloat(numerate/denominate);
     }
     // ใช้  L(X, index, n) , initialValue()
@@ -159,20 +150,16 @@ class Lagrange extends Component {
             X: api.X,
             interpolatePoint: api.interpolateinput,
         });
-        x = []
-        y = []
-        interpolatePoint = []
-        tempTag = []
-        tableTag = []
+    
         await this.createInterpolatePointInput();
         await this.createTableInput(api.nPoints);
         for (let i = 1; i <= api.nPoints; i++) {
           document.getElementById("x" + i ).value = api.arrayX[i - 1];
           document.getElementById("y" + i).value = api.arrayY[i - 1];
         }
-        for (let i = 1; i <= api.interpolateinput; i++) {
-          document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
-        }
+        // for (let i = 1; i <= api.interpolateinput; i++) {
+        //   document.getElementById("p" + i ).value = api.interpolatePoint[i - 1];
+        // }
         this.lagrange(parseInt(this.state.interpolatePoint), parseFloat(this.state.X));
       }
 
@@ -190,7 +177,8 @@ class Lagrange extends Component {
                                     <h4>interpolatePoint  : &nbsp;&nbsp;<Input size="large" name="interpolatePoint"value={this.state.interpolatePoint} style={{ width: 150 }}></Input></h4><br />
                                     <Button id="dimention_button"size="large" onClick= {
                                         ()=>{this.createTableInput(parseInt(this.state.nPoints));
-                                        this.createInterpolatePointInput()}
+                                        // this.createInterpolatePointInput()
+                                    }
                                     }  
                                         style={{background: "#008080", color: "white" }}>
                                         Submit
@@ -209,7 +197,8 @@ class Lagrange extends Component {
                                     <Table columns={columns} dataSource={tableTag} pagination={false} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "white" , overflowY: "scroll", minWidth: 120, maxHeight: 300}}></Table>
                                     <br/><h2>interpolatePoint {parseInt(this.state.interpolatePoint) === 2 ? "(Linear)": 
                                                             parseInt(this.state.interpolatePoint) === 3 ? "(Quadratic)" :
-                                                            "(Polynomial)"}</h2>{tempTag}
+                                                            "(Polynomial)"}</h2>
+                                                            {/* {tempTag} */}
                                                             <br />
                                     <Button 
                                         id="matrix_button"size="large"

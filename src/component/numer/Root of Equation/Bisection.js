@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Input, Button, Table } from 'antd';
+import { Input, Button, Table } from 'antd';
 import 'antd/dist/antd.css';
 import { error, func } from '../services/Services';
 import axios from 'axios';
@@ -124,8 +124,8 @@ class Bisection extends Component {
         await axios({method: "get",url: "http://localhost:5000/database/bisection",}).then((response) => {console.log("response: ", response.data);api = response.data;});
         await this.setState({
             fx:api.fx,
-          xl:api.xl,
-          xr:api.xr
+            xl:api.xl,
+            xr:api.xr
         })
         this.bisection(this.state.xl,this.state.xr)
       }
